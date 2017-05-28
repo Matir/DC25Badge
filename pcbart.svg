@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="150mm"
+   height="52mm"
+   viewBox="0 0 150 52"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="pcbart.svg"
+   inkscape:export-filename="/home/david/Projects/DC25Badge/pcbart.png"
+   inkscape:export-xdpi="300.2453"
+   inkscape:export-ydpi="300.2453">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="244.01934"
+     inkscape:cy="91.883403"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-245)">
+    <g
+       aria-label="XXV"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:158.75px;line-height:6.61458302px;font-family:'DejaVu Sans';-inkscape-font-specification:'Sans Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="text4487"
+       transform="matrix(1,0,0,1.1665147,0,-49.434892)"
+       inkscape:export-xdpi="300.2453"
+       inkscape:export-ydpi="300.2453">
+      <path
+         d="M 33.696137,270.62838 51.541732,296.88 H 37.726899 L 25.703516,279.31002 13.783485,296.88 H -0.10025016 L 17.745345,270.62838 0.58876895,245.44473 H 14.438053 l 11.265463,16.57091 11.231011,-16.57091 h 13.918186 z"
+         style="font-size:70.55555725px;letter-spacing:-5.43454266px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332px"
+         id="path4492"
+         inkscape:connector-curvature="0" />
+      <path
+         d="M 82.694104,270.62838 100.5397,296.88 H 86.724866 L 74.701482,279.31002 62.781452,296.88 H 48.897717 L 66.743312,270.62838 49.586736,245.44473 H 63.43602 l 11.265462,16.57091 11.231012,-16.57091 H 99.85068 Z"
+         style="font-size:70.55555725px;letter-spacing:-5.43454266px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332px"
+         id="path4494"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 96.896606,245.44473 h 13.332524 l 13.64257,37.96495 13.60813,-37.96495 h 13.33252 L 131.76097,296.88 h -15.81299 z"
+         style="font-size:70.55555725px;letter-spacing:-5.43454266px;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332px"
+         id="path4496"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>
