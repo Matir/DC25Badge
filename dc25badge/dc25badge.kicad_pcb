@@ -3,9 +3,9 @@
   (general
     (links 358)
     (no_connects 0)
-    (area 0 0 0 0)
+    (area 26.344399 24.9826 177.683228 89.1374)
     (thickness 1.6)
-    (drawings 0)
+    (drawings 5)
     (tracks 1201)
     (zones 0)
     (modules 110)
@@ -14,7 +14,7 @@
 
   (page A4)
   (layers
-    (0 F.Cu signal)
+    (0 F.Cu signal hide)
     (31 B.Cu signal)
     (32 B.Adhes user)
     (33 F.Adhes user)
@@ -71,7 +71,7 @@
     (aux_axis_origin 0 0)
     (visible_elements FFFFFF7F)
     (pcbplotparams
-      (layerselection 0x00030_80000001)
+      (layerselection 0x010f0_80000001)
       (usegerberextensions false)
       (excludeedgelayer true)
       (linewidth 0.100000)
@@ -89,12 +89,12 @@
       (plotvalue true)
       (plotinvisibletext false)
       (padsonsilk false)
-      (subtractmaskfromsilk false)
+      (subtractmaskfromsilk true)
       (outputformat 1)
       (mirror false)
-      (drillshape 1)
+      (drillshape 0)
       (scaleselection 1)
-      (outputdirectory ""))
+      (outputdirectory output/))
   )
 
   (net 0 "")
@@ -3669,6 +3669,12 @@
       (rotate (xyz 0 0 0))
     )
   )
+
+  (gr_line (start 26.67 86.868) (end 44.323 56.515) (angle 90) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 158.496 86.868) (end 26.67 86.868) (angle 90) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 177.419 27.178) (end 158.496 86.868) (angle 90) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 27.305 27.178) (end 177.419 27.178) (angle 90) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 44.323 56.515) (end 27.305 27.178) (angle 90) (layer Edge.Cuts) (width 0.15))
 
   (segment (start 78.008 31.369) (end 78.008 32.796) (width 0.254) (layer B.Cu) (net 1))
   (segment (start 78.008 32.796) (end 78.867 33.655) (width 0.254) (layer B.Cu) (net 1) (tstamp 592BF749))
