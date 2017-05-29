@@ -376,9 +376,9 @@ SWDIO
 Text GLabel 3750 4050 2    60   Input ~ 0
 SWCLK
 Text GLabel 3750 4450 2    60   BiDi ~ 0
-USBDM
+USBD-
 Text GLabel 3750 4350 2    60   BiDi ~ 0
-USBDP
+USBD+
 $Comp
 L USB_OTG P2
 U 1 1 592AA55B
@@ -401,13 +401,12 @@ F 3 "" H 1250 4250 50  0000 C CNN
 	1    1250 4250
 	1    0    0    -1  
 $EndComp
-NoConn ~ 850  4350
 NoConn ~ 1250 4050
 NoConn ~ 1250 3750
 Text GLabel 1250 3850 2    60   BiDi ~ 0
-USBDM
+USBD-
 Text GLabel 1250 3950 2    60   BiDi ~ 0
-USBDP
+USBD+
 $Comp
 L 74AHCT125 U4
 U 1 1 592AAF69
@@ -726,21 +725,8 @@ Wire Wire Line
 Wire Wire Line
 	2300 4850 2200 4850
 NoConn ~ 3650 4550
-Text GLabel 2200 4350 0    60   Output ~ 0
+Text GLabel 3750 4250 2    60   Output ~ 0
 5V_EN
-Wire Wire Line
-	2200 4350 2300 4350
-$Comp
-L CONN_01X03 P4
-U 1 1 592AFF5F
-P 850 3400
-F 0 "P4" H 850 3600 50  0000 C CNN
-F 1 "UART" V 950 3400 50  0000 C CNN
-F 2 "Pin_Headers2:Pin_Header_Straight_1x03_Pitch2.54mm_SMD_Pin1Left" H 850 3400 50  0001 C CNN
-F 3 "" H 850 3400 50  0000 C CNN
-	1    850  3400
-	-1   0    0    -1  
-$EndComp
 $Comp
 L GND #PWR023
 U 1 1 592B0060
@@ -1142,7 +1128,6 @@ Wire Wire Line
 Connection ~ 5150 1950
 Connection ~ 5400 1950
 NoConn ~ 3650 4150
-NoConn ~ 3650 4250
 NoConn ~ 3650 4650
 Wire Wire Line
 	2200 4450 2300 4450
@@ -1150,4 +1135,23 @@ Wire Wire Line
 	2300 4550 2200 4550
 Wire Wire Line
 	2300 4650 2200 4650
+NoConn ~ 1050 3500
+NoConn ~ 1050 3400
+NoConn ~ 1050 3300
+$Comp
+L GND #PWR028
+U 1 1 592CB85E
+P 850 4400
+F 0 "#PWR028" H 850 4150 50  0001 C CNN
+F 1 "GND" H 850 4250 50  0000 C CNN
+F 2 "" H 850 4400 50  0000 C CNN
+F 3 "" H 850 4400 50  0000 C CNN
+	1    850  4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	850  4400 850  4350
+NoConn ~ 2300 4350
+Wire Wire Line
+	3750 4250 3650 4250
 $EndSCHEMATC
