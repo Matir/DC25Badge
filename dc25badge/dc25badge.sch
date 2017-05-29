@@ -76,7 +76,7 @@ F 1 "BATT" V 850 2450 50  0000 C CNN
 F 2 "Connectors_JST:JST_PH_S2B-PH-SM4-TB_02x2.00mm_Angled" H 750 2450 50  0001 C CNN
 F 3 "" H 750 2450 50  0000 C CNN
 	1    750  2450
-	-1   0    0    1   
+	-1   0    0    -1  
 $EndComp
 $Comp
 L C_Small C2
