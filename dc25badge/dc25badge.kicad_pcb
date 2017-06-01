@@ -3,7 +3,7 @@
   (general
     (links 300)
     (no_connects 0)
-    (area 30.924999 32.674999 157.825001 81.075001)
+    (area 29.748897 30.8683 209.644423 83.1882)
     (thickness 1.6)
     (drawings 13)
     (tracks 1047)
@@ -1651,7 +1651,7 @@
       (net 1 GND))
   )
 
-  (module Pin_Headers2:Pin_Header_Straight_2x05_Pitch1.27mm_SMD (layer B.Cu) (tedit 592D84A9) (tstamp 592BC33B)
+  (module Pin_Headers2:Pin_Header_Straight_2x05_Pitch1.27mm_SMD (layer B.Cu) (tedit 592FBA9E) (tstamp 592BC33B)
     (at 91.576 38.268 180)
     (descr "surface-mounted straight pin header, 2x05, 1.27mm pitch, double rows")
     (tags "Surface mounted pin header SMD 2x05 1.27mm double row")
@@ -1660,7 +1660,7 @@
     (fp_text reference P3 (at 0 4.235 180) (layer B.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
-    (fp_text value CORTEX (at -0.127 4.826 180) (layer B.SilkS)
+    (fp_text value CORTEX (at -0.118 4.4225 180) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_line (start -1.27 3.175) (end -1.27 -3.175) (layer B.Fab) (width 0.1))
@@ -1748,7 +1748,7 @@
     )
   )
 
-  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592BDB1B) (tstamp 592BC343)
+  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592FBA91) (tstamp 592BC343)
     (at 80.5 38.25 180)
     (descr "Light Touch Switch")
     (path /592A92F9)
@@ -1756,7 +1756,7 @@
     (fp_text reference SW1 (at -1 4 180) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value RESET (at 0 -4.25 180) (layer B.SilkS)
+    (fp_text value RESET (at 0.0455 3.8965 180) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_line (start -5.25 3.25) (end 5.25 3.25) (layer B.CrtYd) (width 0.05))
@@ -1783,7 +1783,7 @@
       (net 9 "Net-(R5-Pad2)"))
   )
 
-  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592BE261) (tstamp 592BC353)
+  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592FBAA8) (tstamp 592BC353)
     (at 102.4255 38.1635)
     (descr "Light Touch Switch")
     (path /592B9DF2)
@@ -1791,7 +1791,7 @@
     (fp_text reference SW3 (at -1 4) (layer B.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
-    (fp_text value MODE (at 0 -4.25) (layer B.SilkS)
+    (fp_text value MODE (at 0 -3.937) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_line (start -5.25 3.25) (end 5.25 3.25) (layer B.CrtYd) (width 0.05))
@@ -1818,7 +1818,7 @@
       (net 1 GND))
   )
 
-  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592BE271) (tstamp 592BC35B)
+  (module Buttons_Switches_SMD:SW_SPST_EVQP0 (layer B.Cu) (tedit 592FBAB0) (tstamp 592BC35B)
     (at 115.189 38.0365)
     (descr "Light Touch Switch")
     (path /592BCAF0)
@@ -1826,7 +1826,7 @@
     (fp_text reference SW4 (at -1 4) (layer B.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
-    (fp_text value BRIGHT (at 0 -4.25) (layer B.SilkS)
+    (fp_text value BRIGHT (at 0 -3.937) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_line (start -5.25 3.25) (end 5.25 3.25) (layer B.CrtYd) (width 0.05))
