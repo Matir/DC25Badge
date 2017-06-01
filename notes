@@ -8,6 +8,15 @@ SAMD21
   - set DIPO to 3 for PAD[3] as MISO (NC)
   - Port config for _SS
   - SERCOM1 on 17-20? [0:3]
+  Take 2:
+  - Any pin can be DI
+  - CK can be 1/3
+  - DO Can be 0, 2, 3
+
+  Ideal:
+  DO, CK, CS?
+  DOPO 0
+
 - SERCOM USART
   - TXPO 0, TxD on PAD[0]
   - RXPO 1, RxD on Pad[1]
