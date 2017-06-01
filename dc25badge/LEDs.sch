@@ -601,17 +601,6 @@ F 3 "" H 1650 5150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C_Small C17
-U 1 1 592BE090
-P 1900 5150
-F 0 "C17" H 1910 5220 50  0000 L CNN
-F 1 "0.1u" H 1910 5070 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 1900 5150 50  0001 C CNN
-F 3 "" H 1900 5150 50  0000 C CNN
-	1    1900 5150
-	1    0    0    -1  
-$EndComp
-$Comp
 L C_Small C18
 U 1 1 592BE163
 P 2150 5150
@@ -664,17 +653,6 @@ F 1 "0.1u" H 3160 5070 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0805_HandSoldering" H 3150 5150 50  0001 C CNN
 F 3 "" H 3150 5150 50  0000 C CNN
 	1    3150 5150
-	1    0    0    -1  
-$EndComp
-$Comp
-L C_Small C23
-U 1 1 592BE478
-P 3400 5150
-F 0 "C23" H 3410 5220 50  0000 L CNN
-F 1 "0.1u" H 3410 5070 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 3400 5150 50  0001 C CNN
-F 3 "" H 3400 5150 50  0000 C CNN
-	1    3400 5150
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -972,7 +950,6 @@ Wire Wire Line
 	1400 5400 1400 5250
 Connection ~ 1400 4950
 Connection ~ 1650 4950
-Connection ~ 1900 4950
 Connection ~ 2150 4950
 Connection ~ 2400 4950
 Connection ~ 2650 4950
@@ -989,9 +966,6 @@ Wire Wire Line
 	3650 5250 3650 5350
 Connection ~ 3650 5350
 Wire Wire Line
-	3400 5250 3400 5350
-Connection ~ 3400 5350
-Wire Wire Line
 	3150 5250 3150 5350
 Connection ~ 3150 5350
 Wire Wire Line
@@ -1006,9 +980,6 @@ Connection ~ 2400 5350
 Wire Wire Line
 	2150 5250 2150 5350
 Connection ~ 2150 5350
-Wire Wire Line
-	1900 5250 1900 5350
-Connection ~ 1900 5350
 Wire Wire Line
 	1650 5250 1650 5350
 Connection ~ 1650 5350
@@ -1027,9 +998,6 @@ Wire Wire Line
 	3650 5050 3650 4950
 Connection ~ 3650 4950
 Wire Wire Line
-	3400 5050 3400 4950
-Connection ~ 3400 4950
-Wire Wire Line
 	3150 5050 3150 4950
 Connection ~ 3150 4950
 Wire Wire Line
@@ -1040,8 +1008,6 @@ Wire Wire Line
 	2400 5050 2400 4950
 Wire Wire Line
 	2150 5050 2150 4950
-Wire Wire Line
-	1900 5050 1900 4950
 Wire Wire Line
 	1650 5050 1650 4950
 $EndSCHEMATC

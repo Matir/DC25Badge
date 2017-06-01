@@ -246,8 +246,6 @@ F 3 "" H 4200 5100 50  0000 C CNN
 	1    4200 5100
 	1    0    0    -1  
 $EndComp
-Text GLabel 3250 1850 0    60   Input ~ 0
-5V_EN
 Text GLabel 3650 5250 2    60   Input ~ 0
 ~RESET
 Text GLabel 1750 6600 2    60   Output ~ 0
@@ -467,7 +465,6 @@ Text GLabel 7200 4600 2    60   Output ~ 0
 SPI_CLK
 Text GLabel 7200 5100 2    60   Output ~ 0
 SPI_MOSI
-NoConn ~ 3650 4750
 $Comp
 L R_Small R7
 U 1 1 592AC590
@@ -688,8 +685,6 @@ Wire Wire Line
 Wire Wire Line
 	2300 4850 2200 4850
 NoConn ~ 3650 4550
-Text GLabel 3750 4250 2    60   Output ~ 0
-5V_EN
 $Comp
 L GND #PWR020
 U 1 1 592B0060
@@ -799,21 +794,8 @@ NoConn ~ 2300 4150
 NoConn ~ 2300 4250
 NoConn ~ 2300 4950
 NoConn ~ 2300 5050
-Text GLabel 2200 4450 0    60   Input ~ 0
-SOFT_PWR
 Text GLabel 2200 4550 0    60   Input ~ 0
 MODE
-$Comp
-L SW_Push SW2
-U 1 1 592B9D49
-P 6000 3300
-F 0 "SW2" H 6050 3400 50  0000 L CNN
-F 1 "PWR" H 6000 3240 50  0000 C CNN
-F 2 "Buttons_Switches_SMD:SW_SPST_EVQP0" H 6000 3500 50  0001 C CNN
-F 3 "" H 6000 3500 50  0000 C CNN
-	1    6000 3300
-	1    0    0    -1  
-$EndComp
 $Comp
 L SW_Push SW3
 U 1 1 592B9DF2
@@ -829,10 +811,6 @@ Wire Notes Line
 	500  2800 7000 2800
 Text GLabel 5700 3550 0    60   Output ~ 0
 MODE
-Text GLabel 5700 3300 0    60   Output ~ 0
-SOFT_PWR
-Wire Wire Line
-	5700 3300 5800 3300
 Wire Wire Line
 	5700 3550 5800 3550
 $Comp
@@ -848,21 +826,15 @@ F 3 "" H 6300 3900 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	6200 3550 6300 3550
-Wire Wire Line
-	6300 3300 6300 3900
-Wire Wire Line
-	6200 3300 6300 3300
 Connection ~ 6300 3550
 Text GLabel 3750 5050 2    60   Output ~ 0
 MOSI3
-Text GLabel 3750 4950 2    60   Output ~ 0
+Text GLabel 3750 4750 2    60   Output ~ 0
 SCLK3
 Text GLabel 3750 4850 2    60   Output ~ 0
 SPI_EN
 Wire Wire Line
 	3750 4850 3650 4850
-Wire Wire Line
-	3750 4950 3650 4950
 Wire Wire Line
 	3750 5050 3650 5050
 Text GLabel 6100 4600 0    60   Input ~ 0
@@ -979,24 +951,8 @@ Connection ~ 4700 1750
 Wire Wire Line
 	4000 1400 3600 1400
 Wire Wire Line
-	3600 1400 3600 1750
+	3600 1400 3600 1850
 Connection ~ 3600 1750
-$Comp
-L R_Small R1
-U 1 1 592C5F86
-P 3300 2300
-F 0 "R1" H 3330 2320 50  0000 L CNN
-F 1 "10k" H 3330 2260 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" H 3300 2300 50  0001 C CNN
-F 3 "" H 3300 2300 50  0000 C CNN
-	1    3300 2300
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3300 2200 3300 1850
-Connection ~ 3300 1850
-Wire Wire Line
-	3300 2400 3300 2550
 Connection ~ 3600 2550
 NoConn ~ 3700 1950
 $Comp
@@ -1028,10 +984,7 @@ Wire Wire Line
 	2850 2200 2850 1750
 Connection ~ 2850 1750
 Wire Wire Line
-	3250 1850 3700 1850
-Wire Wire Line
 	2850 2400 2850 2550
-Connection ~ 3300 2550
 $Comp
 L C_Small C6
 U 1 1 592C6FCA
@@ -1092,8 +1045,6 @@ Connection ~ 5400 1950
 NoConn ~ 3650 4150
 NoConn ~ 3650 4650
 Wire Wire Line
-	2200 4450 2300 4450
-Wire Wire Line
 	2300 4550 2200 4550
 Wire Wire Line
 	2300 4650 2200 4650
@@ -1113,9 +1064,16 @@ F 3 "" H 850 4400 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	850  4400 850  4350
-NoConn ~ 2300 4350
-Wire Wire Line
-	3750 4250 3650 4250
 Wire Wire Line
 	5550 900  5550 950 
+NoConn ~ 3650 4250
+Wire Wire Line
+	3750 4750 3650 4750
+NoConn ~ 3650 4950
+Wire Wire Line
+	3600 1850 3700 1850
+NoConn ~ 2300 4350
+Wire Wire Line
+	6300 3550 6300 3900
+NoConn ~ 2300 4450
 $EndSCHEMATC
