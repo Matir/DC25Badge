@@ -2,3 +2,10 @@
 _saved_*
 *-bak
 *.zip
+src/asf
+*.bin
+*.elf
+*.hex
+*.o
+*.lst
+*.map
