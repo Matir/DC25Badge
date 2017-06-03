@@ -47,3 +47,12 @@ void discard_stdin() {
   while (udi_cdc_is_rx_ready())
     getchar();
 }
+
+void terminal_connected(bool set) {
+  // This is used to prevent blocking with a full buffer.
+  // Requires a terminal with DTR capabilities
+  if (set)
+    stdio_usb_enable();
+  else
+    stdio_usb_disable();
+}

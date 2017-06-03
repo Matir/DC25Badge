@@ -10,6 +10,7 @@ XBOARD = SparkFun
 
 INC = \
 			./config \
+			./usb \
 			./asf/sam0/drivers/system \
 			./asf/sam0/drivers/port/ \
 			./asf/sam0/utils/cmsis/samd21/include \
@@ -31,7 +32,6 @@ INC = \
 			./asf/sam0/drivers/system/interrupt/system_interrupt_samd21 \
 			./asf/common/services/sleepmgr \
 			./asf/common/services/usb \
-			./asf/common/utils/stdio/stdio_usb \
 			./asf/common/services/usb/udc \
 			./asf/common/services/usb/class/cdc/device/ \
 			./asf/common/services/usb/class/cdc/ \
@@ -53,7 +53,7 @@ DEP_OBJS = \
 			./asf/sam0/drivers/system/system.o \
 			./asf/common/utils/stdio/read.o \
 			./asf/common/utils/stdio/write.o \
-			./asf/common/utils/stdio/stdio_usb/stdio_usb.o \
+			./usb/stdio_usb.o \
 			./asf/sam0/utils/syscalls/gcc/syscalls.o \
 			./asf/common/services/usb/class/cdc/device/udi_cdc.o \
 			./asf/common/services/usb/class/cdc/device/udi_cdc_desc.o \

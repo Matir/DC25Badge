@@ -17,13 +17,14 @@
 #define  UDC_SUSPEND_EVENT()
 #define  UDC_RESUME_EVENT()
 
-#define  UDI_CDC_ENABLE_EXT(port)         stdio_usb_enable()
-#define  UDI_CDC_DISABLE_EXT(port)        stdio_usb_disable()
+#define  UDI_CDC_ENABLE_EXT(port)         true /*stdio_usb_enable()*/
+#define  UDI_CDC_DISABLE_EXT(port)        true /*stdio_usb_disable()*/
 #define  UDI_CDC_RX_NOTIFY(port)          discard_stdin()
 extern void discard_stdin();
 #define  UDI_CDC_TX_EMPTY_NOTIFY(port)
 #define  UDI_CDC_SET_CODING_EXT(port,cfg)
-#define  UDI_CDC_SET_DTR_EXT(port,set)
+#define  UDI_CDC_SET_DTR_EXT(port,set)    terminal_connected(set)
+extern void terminal_connected(bool set);
 #define  UDI_CDC_SET_RTS_EXT(port,set)
 
 #define  UDI_CDC_DEFAULT_RATE             115200
