@@ -60,7 +60,7 @@ DEP_OBJS = \
 
 CFLAGS = -mcpu=cortex-m0plus -mthumb -Wall -Werror -std=gnu11 -g -O0 -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
-	-Dprintf=iprintf -Wno-unused-but-set-variable
+	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing
 
 CFLAGS += $(addprefix -I ,$(INC))
 
@@ -70,12 +70,17 @@ CFLAGS += -ffunction-sections -fdata-sections
 
 LDSCRIPT = asf/sam0/utils/linker_scripts/samd21/gcc/$(shell echo $(TARGET)| tr A-Z a-z)_flash.ld
 
-LDFLAGS = -Wl,-T $(LDSCRIPT) -Wl,--gc-sections -Wl,-Map=dc25badge.map
+LDFLAGS = -Wl,-T $(LDSCRIPT) -Wl,--gc-sections -Wl,-Map=dc25badge.map \
+					--specs=nano.specs
 
 OBJS = main.o \
 			 $(DEP_OBJS)
 
 CONFIG_HEADERS = $(wildcard *.h) $(wildcard config/*.h)
+
+PORT ?= ttyACM0
+
+### Targets Begin ###
 
 .PHONY: all
 all: dc25badge.bin
@@ -91,11 +96,18 @@ dc25badge.elf: $(OBJS)
 
 dc25badge.map: dc25badge.elf
 
-
 .PHONY: clean
 clean:
 	rm -f -- *.bin *.elf
 	find . -name '*.o' -delete
+
+.PHONY: upload
+upload: dc25badge.bin
+	bossac --port=$(PORT) --info --erase --write --verify --reset $<
+
+.PHONY: console
+console:
+	screen /dev/$(PORT) 115200
 
 .PHONY: variables
 variables:

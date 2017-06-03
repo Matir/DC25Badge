@@ -15,7 +15,7 @@ static void setup();
 int main() {
   setup();
   while(1) {
-    delay_ms(100);
+    delay_ms(1000);
     printf("Hello.\n");
   }
 }
