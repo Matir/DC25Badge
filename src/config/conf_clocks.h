@@ -44,10 +44,11 @@
 
 /* SYSTEM_CLOCK_SOURCE_DFLL configuration - Digital Frequency Locked Loop */
 #  define CONF_CLOCK_DFLL_ENABLE                  false
-#  define CONF_CLOCK_DFLL_LOOP_MODE               SYSTEM_CLOCK_DFLL_LOOP_MODE_OPEN
-#  define CONF_CLOCK_DFLL_ON_DEMAND               false
+#  define CONF_CLOCK_DFLL_LOOP_MODE               SYSTEM_CLOCK_DFLL_LOOP_MODE_USB_RECOVERY
+#  define CONF_CLOCK_DFLL_ON_DEMAND               true
 
 /* DFLL open loop mode configuration */
+#  define CONF_CLOCK_DFLL_COARSE_VALUE            (0x1f / 4)
 #  define CONF_CLOCK_DFLL_FINE_VALUE              (0xff / 4)
 
 /* DFLL closed loop mode configuration */

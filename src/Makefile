@@ -1,3 +1,5 @@
+MAKEFLAGS += -rR --no-print-directory
+
 CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
@@ -37,6 +39,7 @@ INC = \
 			./asf/common/boards/user_board \
 			./asf/sam0/drivers/extint \
 			./asf/sam0/drivers/system/pinmux \
+			./asf/common/services/ioport \
 
 DEP_OBJS = \
 			./asf/common2/services/delay/sam0/systick_counter.o \
@@ -59,10 +62,13 @@ DEP_OBJS = \
 			./asf/sam0/drivers/system/pinmux/pinmux.o \
 
 
-CFLAGS = -mcpu=cortex-m0plus -mthumb -Wall -Werror -std=gnu11 -g -O0 -pipe \
+COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
+
+CFLAGS = $(COMMON_FLAGS) -Wall -Werror -std=gnu11 -g -O0 -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
 	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing \
-	-DXBOARD=$(XBOARD)
+	-DXBOARD=$(XBOARD) \
+	-nostartfiles
 
 CFLAGS += $(addprefix -I ,$(INC))
 
@@ -70,10 +76,9 @@ CFLAGS += $(addprefix -I ,$(INC))
 # # garbage collection of unused sections.
 CFLAGS += -ffunction-sections -fdata-sections
 
-LDSCRIPT = asf/sam0/utils/linker_scripts/samd21/gcc/$(shell echo $(TARGET)| tr A-Z a-z)_flash.ld
-
-LDFLAGS = -Wl,-T $(LDSCRIPT) -Wl,--gc-sections -Wl,-Map=dc25badge.map \
-					--specs=nano.specs
+LDFLAGS = $(COMMON_FLAGS) \
+					-Wl,-T samd21e18a_flash.ld -Wl,--gc-sections -Wl,-Map=dc25badge.map \
+					--specs=nano.specs -Wl,--entry=Reset_Handler
 
 OBJS = main.o \
 			 $(DEP_OBJS)
@@ -100,8 +105,8 @@ dc25badge.map: dc25badge.elf
 
 .PHONY: clean
 clean:
-	rm -f -- *.bin *.elf
-	find . -name '*.o' -delete
+	rm -f -- *.bin *.elf *.map
+	find . -name tools -prune -o -name '*.o' -print | xargs rm
 
 .PHONY: upload
 upload: dc25badge.bin bossa
