@@ -3,6 +3,7 @@ OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
 
 TARGET = SAMD21G18A
+XBOARD = SparkFun
 
 INC = \
 			./config \
@@ -60,7 +61,8 @@ DEP_OBJS = \
 
 CFLAGS = -mcpu=cortex-m0plus -mthumb -Wall -Werror -std=gnu11 -g -O0 -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
-	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing
+	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing \
+	-DXBOARD=$(XBOARD)
 
 CFLAGS += $(addprefix -I ,$(INC))
 
@@ -102,12 +104,29 @@ clean:
 	find . -name '*.o' -delete
 
 .PHONY: upload
-upload: dc25badge.bin
-	bossac --port=$(PORT) --info --erase --write --verify --reset $<
+upload: dc25badge.bin bossa
+	tools/BOSSA/bin/bossac --port=$(PORT) --info --erase --write --verify --reset $<
 
 .PHONY: console
 console:
 	screen /dev/$(PORT) 115200
+
+.PHONY: bootloader
+bootloader:
+	# Only for the 'E' series!
+	make -C bootloader
+
+.PHONY: burnin
+burnin: bootloader
+	echo "TODO"
+
+.PHONY: debug
+debug:
+	echo "TODO"
+
+.PHONY: bossa
+bossa:
+	make -C tools/BOSSA
 
 .PHONY: variables
 variables:

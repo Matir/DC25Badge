@@ -1,3 +1,6 @@
 [submodule "Pin_Headers.pretty"]
 	path = Pin_Headers.pretty
 	url = https://github.com/KiCad/Pin_Headers.pretty.git
+[submodule "src/tools/BOSSA"]
+	path = src/tools/BOSSA
+	url = https://github.com/shumatech/BOSSA.git
