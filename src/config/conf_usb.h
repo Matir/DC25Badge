@@ -17,9 +17,10 @@
 #define  UDC_SUSPEND_EVENT()
 #define  UDC_RESUME_EVENT()
 
-#define  UDI_CDC_ENABLE_EXT(port)          stdio_usb_enable()
-#define  UDI_CDC_DISABLE_EXT(port)         stdio_usb_disable()
-#define  UDI_CDC_RX_NOTIFY(port)
+#define  UDI_CDC_ENABLE_EXT(port)         stdio_usb_enable()
+#define  UDI_CDC_DISABLE_EXT(port)        stdio_usb_disable()
+#define  UDI_CDC_RX_NOTIFY(port)          discard_stdin()
+extern void discard_stdin();
 #define  UDI_CDC_TX_EMPTY_NOTIFY(port)
 #define  UDI_CDC_SET_CODING_EXT(port,cfg)
 #define  UDI_CDC_SET_DTR_EXT(port,set)
@@ -32,5 +33,7 @@
 
 #include <udi_cdc_conf.h>
 #include <stdio_usb.h>
+
+#define UDD_CLOCK_GEN GCLK_GENERATOR_3
 
 #endif // _CONF_USB_H_

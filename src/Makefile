@@ -1,3 +1,4 @@
+PROJNAME = dc25badge
 MAKEFLAGS += -rR --no-print-directory
 
 CC = arm-none-eabi-gcc
@@ -77,7 +78,7 @@ CFLAGS += $(addprefix -I ,$(INC))
 CFLAGS += -ffunction-sections -fdata-sections
 
 LDFLAGS = $(COMMON_FLAGS) \
-					-Wl,-T samd21e18a_flash.ld -Wl,--gc-sections -Wl,-Map=dc25badge.map \
+					-Wl,-T samd21e18a_flash.ld -Wl,--gc-sections -Wl,-Map=$(PROJNAME).map \
 					--specs=nano.specs -Wl,--entry=Reset_Handler
 
 OBJS = main.o \
@@ -90,18 +91,18 @@ PORT ?= ttyACM0
 ### Targets Begin ###
 
 .PHONY: all
-all: dc25badge.bin
+all: $(PROJNAME).bin
 
-dc25badge.bin: dc25badge.elf
+$(PROJNAME).bin: $(PROJNAME).elf
 	$(OBJCOPY) -O binary $< $@
 
-dc25badge.elf: $(OBJS)
+$(PROJNAME).elf: $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 %.o: %.c $(CONFIG_HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-dc25badge.map: dc25badge.elf
+$(PROJNAME).map: $(PROJNAME).elf
 
 .PHONY: clean
 clean:
@@ -109,7 +110,7 @@ clean:
 	find . -name tools -prune -o -name '*.o' -print | xargs rm
 
 .PHONY: upload
-upload: dc25badge.bin bossa
+upload: $(PROJNAME).bin bossa
 	tools/BOSSA/bin/bossac --port=$(PORT) --info --erase --write --verify --reset $<
 
 .PHONY: console
@@ -125,9 +126,13 @@ bootloader:
 burnin: bootloader
 	echo "TODO"
 
-.PHONY: debug
-debug:
-	echo "TODO"
+.PHONY: openocd gdb
+openocd:
+	openocd -f ./openocd.cfg
+
+gdb:
+	gdb-multiarch -n -ex 'file ./$(PROJNAME).elf' \
+		-ex 'target extended-remote :3333'
 
 .PHONY: bossa
 bossa:

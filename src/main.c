@@ -21,7 +21,7 @@ int main() {
   while(1) {
     ioport_toggle_pin_level(LED_PIN);
     delay_ms(1000);
-    //printf("Hello.\n");
+    printf("Hello.\r\n");
   }
 }
 
@@ -30,13 +30,20 @@ static void setup() {
   irq_initialize_vectors();
   cpu_irq_enable();
   delay_init();
-  //sleepmgr_init();
+  sleepmgr_init();
   ioport_init();
 
   ioport_set_pin_dir(LED_PIN, IOPORT_DIR_OUTPUT);
 
   // Redirect STDIO to the USB Port
-  //stdio_usb_init();
+  stdio_usb_init();
+  // Disabled by default
+  stdio_usb_disable();
 }
 
-
+void discard_stdin() {
+  // Sigh, apparently the CDC mode is blocking.
+  // This runs from interrupt context
+  while (udi_cdc_is_rx_ready())
+    getchar();
+}
