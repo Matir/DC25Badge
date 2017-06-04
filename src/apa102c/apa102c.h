@@ -4,9 +4,9 @@ COMPILER_PACK_SET(1)
 COMPILER_ALIGNED(4)
 typedef struct {
   uint8_t brightness;
-  uint8_t red;
-  uint8_t green;
   uint8_t blue;
+  uint8_t green;
+  uint8_t red;
 } pixel;
 COMPILER_PACK_RESET()
 
