@@ -64,7 +64,9 @@ DEP_OBJS = \
 			./asf/sam0/drivers/usb/usb_sam_d_r/usb.o \
 			./asf/sam0/drivers/system/pinmux/pinmux.o \
 			./asf/sam0/drivers/sercom/spi/spi.o \
+			./asf/sam0/drivers/sercom/spi/spi_interrupt.o \
 			./asf/sam0/drivers/sercom/sercom.o \
+			./asf/sam0/drivers/sercom/sercom_interrupt.o \
 			./asf/sam0/drivers/port/port.o \
 
 
