@@ -41,6 +41,9 @@ INC = \
 			./asf/sam0/drivers/extint \
 			./asf/sam0/drivers/system/pinmux \
 			./asf/common/services/ioport \
+			./asf/sam0/drivers/sercom \
+			./asf/sam0/drivers/sercom/spi \
+			./asf/sam0/drivers/port \
 
 DEP_OBJS = \
 			./asf/common2/services/delay/sam0/systick_counter.o \
@@ -53,7 +56,6 @@ DEP_OBJS = \
 			./asf/sam0/drivers/system/system.o \
 			./asf/common/utils/stdio/read.o \
 			./asf/common/utils/stdio/write.o \
-			./usb/stdio_usb.o \
 			./asf/sam0/utils/syscalls/gcc/syscalls.o \
 			./asf/common/services/usb/class/cdc/device/udi_cdc.o \
 			./asf/common/services/usb/class/cdc/device/udi_cdc_desc.o \
@@ -61,6 +63,9 @@ DEP_OBJS = \
 			./asf/common/services/usb/udc/udc.o \
 			./asf/sam0/drivers/usb/usb_sam_d_r/usb.o \
 			./asf/sam0/drivers/system/pinmux/pinmux.o \
+			./asf/sam0/drivers/sercom/spi/spi.o \
+			./asf/sam0/drivers/sercom/sercom.o \
+			./asf/sam0/drivers/port/port.o \
 
 
 COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
@@ -82,6 +87,8 @@ LDFLAGS = $(COMMON_FLAGS) \
 					--specs=nano.specs -Wl,--entry=Reset_Handler
 
 OBJS = main.o \
+			 usb/stdio_usb.o \
+			 apa102c/apa102c.o \
 			 $(DEP_OBJS)
 
 CONFIG_HEADERS = $(wildcard *.h) $(wildcard config/*.h)
