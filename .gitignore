@@ -1,4 +1,5 @@
 *.bak
+_autosave-*
 _saved_*
 *-bak
 *.zip
@@ -9,3 +10,4 @@ src/asf
 *.o
 *.lst
 *.map
+.gdb_history

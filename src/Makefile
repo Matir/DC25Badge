@@ -89,6 +89,7 @@ LDFLAGS = $(COMMON_FLAGS) \
 OBJS = main.o \
 			 usb/stdio_usb.o \
 			 apa102c/apa102c.o \
+			 pattern/pattern.o \
 			 $(DEP_OBJS)
 
 CONFIG_HEADERS = $(wildcard *.h) $(wildcard config/*.h)

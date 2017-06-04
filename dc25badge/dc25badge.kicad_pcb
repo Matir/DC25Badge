@@ -14,7 +14,7 @@
 
   (page A4)
   (layers
-    (0 F.Cu signal)
+    (0 F.Cu signal hide)
     (31 B.Cu signal)
     (32 B.Adhes user)
     (33 F.Adhes user)
@@ -33,7 +33,7 @@
     (46 B.CrtYd user)
     (47 F.CrtYd user)
     (48 B.Fab user)
-    (49 F.Fab user)
+    (49 F.Fab user hide)
   )
 
   (setup
@@ -70,7 +70,7 @@
     (pad_to_mask_clearance 0.05)
     (solder_mask_min_width 0.1)
     (aux_axis_origin 0 0)
-    (visible_elements FFFFFF7F)
+    (visible_elements FFFFBF7F)
     (pcbplotparams
       (layerselection 0x010f0_80000001)
       (usegerberextensions false)
