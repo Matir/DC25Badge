@@ -10,6 +10,8 @@
 #include <pinmux.h>
 #include <spi.h>
 #include <status_codes.h>
+#include <extint.h>
+#include <extint_callback.h>
 
 // Standard Headers
 #include <stdio.h>
@@ -23,8 +25,12 @@ extern struct spi_slave_inst spi_slave_dev;
 
 static void setup();
 static void setup_spi();
+static void button_callback();
+static void setup_button();
 
 #define LED_PIN_IO IOPORT_CREATE_PIN(IOPORT_PORTA, LED_PIN)
+
+int button_count = 0;
 
 int main() {
   setup();
@@ -32,6 +38,7 @@ int main() {
   while(1) {
     ioport_toggle_pin_level(LED_PIN_IO);
     delay_ms(1000);
+    printf("Button count is %d\r\n", button_count);
   }
 }
 
@@ -52,6 +59,8 @@ static void setup() {
   stdio_usb_disable();
 
   setup_spi();
+
+  setup_button();
 }
 
 static void setup_spi() {
@@ -97,4 +106,21 @@ void terminal_connected(bool set) {
     stdio_usb_enable();
   else
     stdio_usb_disable();
+}
+
+static void setup_button() {
+  struct extint_chan_conf config_int;
+  extint_chan_get_config_defaults(&config_int);
+  config_int.gpio_pin = PIN_PA15A_EIC_EXTINT15;
+  config_int.gpio_pin_mux = MUX_PA15A_EIC_EXTINT15;
+  config_int.gpio_pin_pull = EXTINT_PULL_UP;
+  config_int.detection_criteria = EXTINT_DETECT_BOTH;
+  extint_chan_set_config(15, &config_int);
+
+  extint_register_callback(button_callback, 15, EXTINT_CALLBACK_TYPE_DETECT);
+  extint_chan_enable_callback(15, EXTINT_CALLBACK_TYPE_DETECT);
+}
+
+static void button_callback() {
+  button_count++;
 }

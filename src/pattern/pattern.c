@@ -9,7 +9,7 @@ uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
 uint8_t global_brightness_scale = 2;
 
-pattern_def defined_patterns[] = {
+const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
   {NULL, NULL},
 };
