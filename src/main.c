@@ -15,6 +15,7 @@
 #include <stdio.h>
 
 #include "apa102c/apa102c.h"
+#include "pattern/pattern.h"
 
 
 extern struct spi_module spi_master;
@@ -23,32 +24,14 @@ extern struct spi_slave_inst spi_slave_dev;
 static void setup();
 static void setup_spi();
 
-#define LED_PIN IOPORT_CREATE_PIN(IOPORT_PORTA, 27)
+#define LED_PIN_IO IOPORT_CREATE_PIN(IOPORT_PORTA, LED_PIN)
 
 int main() {
-  int i, k;
-  pixel px;
   setup();
+  pattern_start();
   while(1) {
-    ioport_toggle_pin_level(LED_PIN);
-    // TODO, move this off to a clock
-    // draw a sample
-    for(i=0; i<8; i++) {
-      apa102c_frame_begin();
-      for(k=0;k<8;k++) {
-        px.brightness = 16;
-        if(i==k)
-          px.red = 127;
-        else
-          px.red = 0;
-        px.blue = 0;
-        px.green = 0;
-        apa102c_send_pixel(&px);
-      }
-      apa102c_frame_end();
-      delay_ms(500);
-      ioport_set_pin_dir(LED_PIN, IOPORT_DIR_OUTPUT);
-    }
+    ioport_toggle_pin_level(LED_PIN_IO);
+    delay_ms(1000);
   }
 }
 
@@ -56,9 +39,12 @@ static void setup() {
   system_init();
   irq_initialize_vectors();
   cpu_irq_enable();
+  system_interrupt_enable_global();
   delay_init();
   sleepmgr_init();
   ioport_init();
+
+  ioport_set_pin_dir(LED_PIN_IO, IOPORT_DIR_OUTPUT);
 
   // Redirect STDIO to the USB Port
   stdio_usb_init();

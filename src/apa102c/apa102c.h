@@ -1,4 +1,9 @@
+#ifndef _APA102C_H_
+#define _APA102C_H_
+
 #include <compiler.h>
+
+#define CLEAR_PIXEL(x) (x) = ((pixel){0xFF, 0, 0, 0})
 
 COMPILER_PACK_SET(1)
 COMPILER_ALIGNED(4)
@@ -13,3 +18,5 @@ COMPILER_PACK_RESET()
 void apa102c_frame_begin();
 void apa102c_send_pixel(pixel *data);
 void apa102c_frame_end();
+
+#endif // _APA102C_H_

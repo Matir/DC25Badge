@@ -1,26 +1,48 @@
 #include "pattern.h"
 
+#include <tc.h>
+#include <tc_interrupt.h>
+
+struct tc_module tc_instance;
+
 uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
+uint8_t global_brightness_scale = 2;
 
 pattern_def defined_patterns[] = {
+  {"White Chase", pattern_chase_white},
+  {NULL, NULL},
 };
 
-void pattern_next() {
+void pattern_start() {
+  // Start periodic interrupts to call frame_next.
+  // An 8MHz GCLK with a 1024 prescaler into an 8-bit counter = 32.768ms
+  struct tc_config config_tc;
+  tc_get_config_defaults(&config_tc);
+
+  config_tc.counter_size = TC_COUNTER_SIZE_8BIT;
+  config_tc.clock_source = GCLK_GENERATOR_0;
+  config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV1024;
+  config_tc.run_in_standby = true;
+  config_tc.counter_8_bit.period = 255;
+
+  // Start things up
+  tc_init(&tc_instance, PATTERN_TC, &config_tc);
+  tc_register_callback(&tc_instance, frame_next, TC_CALLBACK_OVERFLOW);
+  tc_enable_callback(&tc_instance, TC_CALLBACK_OVERFLOW);
+  tc_enable(&tc_instance);
+
+  // Draw the first frame
+  frame_next(&tc_instance);
 }
 
-void frame_next() {
-  pixel px;
-  uint8_t pos;
-  apa102c_frame_begin();
-  for (pos=0;pos<NUM_PIXELS;pos++) {
-    defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
-    apa102c_send_pixel(&px);
+void pattern_next() {
+  if (defined_patterns[pattern_num+1].pixel_update != NULL) {
+    pattern_num++;
+  } else {
+    pattern_num=0;
   }
-  apa102c_frame_end();
-  frame_num++;
-  if (frame_num >= FRAME_NUM_MAX)
-    frame_num -= FRAME_NUM_MAX;
+  printf("Pattern changed to %s\n", defined_patterns[pattern_num].name);
 }
 
 void pattern_off() {
@@ -33,6 +55,23 @@ void pattern_off() {
   apa102c_frame_end();
   frame_num = 0;
 }
+
+void frame_next(struct tc_module *unused_module) {
+  printf(".");
+  pixel px;
+  uint8_t pos;
+  apa102c_frame_begin();
+  for (pos=0;pos<NUM_PIXELS;pos++) {
+    defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
+    px.brightness >>= global_brightness_scale;
+    apa102c_send_pixel(&px);
+  }
+  apa102c_frame_end();
+  frame_num++;
+  if (frame_num >= FRAME_NUM_MAX)
+    frame_num -= FRAME_NUM_MAX;
+}
+
 
 /* Position information for XXV */
 uint8_t pixel_get_row(uint8_t num) {

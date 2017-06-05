@@ -33,12 +33,9 @@ void apa102c_frame_end(){
   do {
     spi_send(null_frame, 4);
   } while(--num_frames);
-  // Wait on final send
-  spi_get_job_status_wait(&spi_master);
 }
 
 static void spi_send(const uint8_t *buffer, uint16_t count) {
-  // Wait for the previous write to complete.
-  spi_get_job_status_wait(&spi_master);
-  spi_write_buffer_job(&spi_master, (uint8_t *)buffer, count);
+  // Sync
+  spi_write_buffer_wait(&spi_master, (uint8_t *)buffer, count);
 }
