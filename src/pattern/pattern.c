@@ -57,13 +57,12 @@ void pattern_off() {
 }
 
 void frame_next(struct tc_module *unused_module) {
-  printf(".");
   pixel px;
   uint8_t pos;
   apa102c_frame_begin();
   for (pos=0;pos<NUM_PIXELS;pos++) {
     defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
-    px.brightness >>= global_brightness_scale;
+    px.brightness = (px.brightness & 0x1f) >> global_brightness_scale;
     apa102c_send_pixel(&px);
   }
   apa102c_frame_end();
