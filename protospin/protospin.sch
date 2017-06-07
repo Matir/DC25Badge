@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:protospin-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -56,7 +57,7 @@ F 3 "" H 5200 2000 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L MIC5305 U1
+L MIC5305-RESCUE-protospin U1
 U 1 1 592CED5B
 P 1700 1600
 F 0 "U1" H 1950 2050 60  0000 C CNN
