@@ -12,6 +12,8 @@ uint8_t pattern_running = 1;
 
 const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
+  {"Red Chase", pattern_chase_red},
+  {"Blue Chase", pattern_chase_blue},
   {NULL, NULL},
 };
 
