@@ -5,7 +5,7 @@ CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
 
-XBOARD = SPARKFUN
+XBOARD = TEST
 ifeq ($(XBOARD),SPARKFUN)
 	TARGET = SAMD21G18A
 else

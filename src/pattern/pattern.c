@@ -7,13 +7,17 @@ struct tc_module tc_instance;
 
 uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
-uint8_t global_brightness_scale = 2;
+uint8_t global_brightness_scale = 0;
 uint8_t pattern_running = 1;
 
 const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
   {"Red Chase", pattern_chase_red},
   {"Blue Chase", pattern_chase_blue},
+  {"Max Bright", pattern_bright},
+  {"50%", pattern_bright_half},
+  {"50% PWM", pattern_bright_pwm},
+  {"Ripple", pattern_ripple},
   {NULL, NULL},
 };
 

@@ -40,5 +40,9 @@ uint8_t pixel_get_col_fine(uint8_t num);
 PATTERN_UPDATE_FUNC(pattern_chase_white);
 PATTERN_UPDATE_FUNC(pattern_chase_red);
 PATTERN_UPDATE_FUNC(pattern_chase_blue);
+PATTERN_UPDATE_FUNC(pattern_bright);
+PATTERN_UPDATE_FUNC(pattern_bright_half);
+PATTERN_UPDATE_FUNC(pattern_bright_pwm);
+PATTERN_UPDATE_FUNC(pattern_ripple);
 
 #endif // _PATTERN_H_
