@@ -1,20 +1,13 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#if defined(__SAMD21G18A__)
-# include <samd21g18a.h>
-#elif defined(__SAMD21E18A__)
-# include <samd21e18a.h>
-#else
-# error "Unknown MCU."
-#endif
-
 #define PATTERN_TC TC3
 #define DEBOUNCE_TC TC4
 
 #if defined(XBOARD_SPARKFUN)
+# include <samd21g18a.h>
 # ifndef __SAMD21G18A__
-#  error "XBOARD_SPARKFUN is a SAMD21G18A"
+#  error "SPARKFUN is a SAMD21G18A"
 # endif
 # define NUM_PIXELS           5
 # define LED_PIN              27
@@ -24,10 +17,11 @@
 # define BRIGHT_BUTTON_MUX    MUX_PA14A_EIC_EXTINT14
 
 #elif defined(XBOARD_TEST)
+# include <samd21e18a.h>
 # ifndef __SAMD21E18A__
-#  error "XBOARD_TEST is a SAMD21E18A"
+#  error "TEST is a SAMD21E18A"
 # endif
-# define NUM_PIXELS           2
+# define NUM_PIXELS           7
 # define LED_PIN              27
 # define PATTERN_BUTTON_PIN   PIN_PA06A_EIC_EXTINT6
 # define PATTERN_BUTTON_MUX   MUX_PA06A_EIC_EXTINT6
@@ -35,8 +29,9 @@
 # define BRIGHT_BUTTON_MUX    MUX_PA07A_EIC_EXTINT7
 
 #elif defined(XBOARD_XXV)
+# include <samd21e18a.h>
 # ifndef __SAMD21E18A__
-#  error "XBOARD_XXV is a SAMD21E18A"
+#  error "XXV is a SAMD21E18A"
 # endif
 # define NUM_PIXELS           48
 # define LED_PIN              18
