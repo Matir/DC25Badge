@@ -77,12 +77,24 @@ static void setup_spi() {
   spi_attach_slave(&spi_slave_dev, &slave_cfg);
 
   spi_get_config_defaults(&cfg);
+#if defined(XBOARD_SPARKFUN)
   cfg.mux_setting = SPI_SIGNAL_MUX_SETTING_N;
-  cfg.receiver_enable = false; // One way
   cfg.pinmux_pad0 = PINMUX_PA16C_SERCOM1_PAD0;
   cfg.pinmux_pad1 = PINMUX_UNUSED;
   cfg.pinmux_pad2 = PINMUX_PA18C_SERCOM1_PAD2;
   cfg.pinmux_pad3 = PINMUX_PA19C_SERCOM1_PAD3;
+#elif defined(XBOARD_TEST)
+  cfg.mux_setting = SPI_SIGNAL_MUX_SETTING_D;
+  cfg.pinmux_pad0 = PINMUX_PA16C_SERCOM1_PAD0;
+  cfg.pinmux_pad1 = PINMUX_PA17C_SERCOM1_PAD1;
+  cfg.pinmux_pad2 = PINMUX_PA18C_SERCOM1_PAD2;
+  cfg.pinmux_pad3 = PINMUX_UNUSED;
+#elif defined(XBOARD_XXV)
+# error "Need mux settings."
+#else
+# error "Unknown board config."
+#endif
+  cfg.receiver_enable = false; // One way
   cfg.mode_specific.master.baudrate = 100000;  // 100k for now
   if (spi_init(&spi_master, SERCOM1, &cfg) != STATUS_OK )
   {
