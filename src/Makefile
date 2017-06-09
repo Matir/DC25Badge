@@ -6,7 +6,7 @@ OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
 
 TARGET = SAMD21G18A
-BOARD_DEF = XBOARD_SPARKFUN
+BOARD_DEF = SPARKFUN
 
 INC = \
 			./config \
@@ -45,6 +45,7 @@ INC = \
 			./asf/sam0/drivers/sercom/spi \
 			./asf/sam0/drivers/port \
 			./asf/sam0/drivers/tc \
+			./asf/sam0/drivers/extint \
 
 DEP_OBJS = \
 			./asf/common2/services/delay/sam0/systick_counter.o \
@@ -71,6 +72,8 @@ DEP_OBJS = \
 			./asf/sam0/drivers/port/port.o \
 			./asf/sam0/drivers/tc/tc_interrupt.o \
 			./asf/sam0/drivers/tc/tc_sam_d_r_h/tc.o \
+			./asf/sam0/drivers/extint/extint_callback.o \
+			./asf/sam0/drivers/extint/extint_sam_d_r_h/extint.o \
 
 
 COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
@@ -78,7 +81,9 @@ COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
 CFLAGS = $(COMMON_FLAGS) -Wall -Werror -std=gnu11 -g -O0 -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
 	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing \
-	-D$(BOARD_DEF) -nostartfiles -DTC_ASYNC=true
+	-DXBOARD_$(BOARD_DEF) -nostartfiles -DTC_ASYNC=true \
+	-DEXTINT_CALLBACK_MODE=true \
+
 
 CFLAGS += $(addprefix -I ,$(INC))
 
@@ -96,6 +101,7 @@ OBJS = main.o \
 			 usb/stdio_usb.o \
 			 apa102c/apa102c.o \
 			 pattern/pattern.o \
+			 button/button.o \
 			 $(PATTERNS:%.c=%.o) \
 			 $(DEP_OBJS)
 

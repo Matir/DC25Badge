@@ -8,8 +8,9 @@ struct tc_module tc_instance;
 uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
 uint8_t global_brightness_scale = 2;
+uint8_t pattern_running = 1;
 
-pattern_def defined_patterns[] = {
+const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
   {NULL, NULL},
 };
@@ -37,17 +38,21 @@ void pattern_start() {
 }
 
 void pattern_next() {
+  if (!pattern_running)
+    pattern_running = 1;
   if (defined_patterns[pattern_num+1].pixel_update != NULL) {
     pattern_num++;
   } else {
-    pattern_num=0;
+    pattern_num = 0;
   }
+  frame_num = 0;
   printf("Pattern changed to %s\n", defined_patterns[pattern_num].name);
 }
 
 void pattern_off() {
   // Turn off all the pixels
   int i;
+  pattern_running = 0;
   pixel empty = {0,0,0,0};
   apa102c_frame_begin();
   for (i=0;i<NUM_PIXELS;i++)
@@ -59,6 +64,10 @@ void pattern_off() {
 void frame_next(struct tc_module *unused_module) {
   pixel px;
   uint8_t pos;
+
+  if (!pattern_running)
+    return;
+
   apa102c_frame_begin();
   for (pos=0;pos<NUM_PIXELS;pos++) {
     defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
