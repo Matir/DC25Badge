@@ -6,7 +6,7 @@ OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
 
 TARGET = SAMD21G18A
-BOARD_DEF = XBOARD_SPARKFUN
+BOARD_DEF = SPARKFUN
 
 INC = \
 			./config \
@@ -81,7 +81,8 @@ COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
 CFLAGS = $(COMMON_FLAGS) -Wall -Werror -std=gnu11 -g -O0 -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
 	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing \
-	-D$(BOARD_DEF) -nostartfiles -DTC_ASYNC=true -DEXTINT_CALLBACK_MODE=true \
+	-DXBOARD_$(BOARD_DEF) -nostartfiles -DTC_ASYNC=true \
+	-DEXTINT_CALLBACK_MODE=true \
 
 
 CFLAGS += $(addprefix -I ,$(INC))

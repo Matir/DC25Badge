@@ -24,18 +24,18 @@
 extern struct spi_module spi_master;
 extern struct spi_slave_inst spi_slave_dev;
 
-button_controller btn;
+button_controller btn_bright;
+button_controller btn_pattern;
 
 static void setup();
 static void setup_spi();
-static void button_callback();
-static void setup_button();
-static void button_callback_short();
-static void button_callback_long();
+static void setup_buttons();
+static void button_callback_pattern();
+static void button_callback_bright();
+static void button_callback_bright_short();
+static void button_callback_bright_long();
 
 #define LED_PIN_IO IOPORT_CREATE_PIN(IOPORT_PORTA, LED_PIN)
-
-int button_count = 0;
 
 int main() {
   setup();
@@ -43,7 +43,6 @@ int main() {
   while(1) {
     ioport_toggle_pin_level(LED_PIN_IO);
     delay_ms(1000);
-    printf("Button count is %d\r\n", button_count);
   }
 }
 
@@ -65,7 +64,7 @@ static void setup() {
 
   setup_spi();
 
-  setup_button();
+  setup_buttons();
 }
 
 static void setup_spi() {
@@ -125,33 +124,57 @@ void terminal_connected(bool set) {
     stdio_usb_disable();
 }
 
-static void setup_button() {
+static void setup_buttons() {
   struct extint_chan_conf config_int;
+
+  // Setup pattern button
   extint_chan_get_config_defaults(&config_int);
-  config_int.gpio_pin = PIN_PA15A_EIC_EXTINT15;
-  config_int.gpio_pin_mux = MUX_PA15A_EIC_EXTINT15;
+  config_int.gpio_pin = PATTERN_BUTTON_PIN;
+  config_int.gpio_pin_mux = PATTERN_BUTTON_MUX;
   config_int.gpio_pin_pull = EXTINT_PULL_UP;
   config_int.detection_criteria = EXTINT_DETECT_BOTH;
-  extint_chan_set_config(15, &config_int);
+  extint_chan_set_config(PATTERN_BUTTON_PIN, &config_int);
 
-  extint_register_callback(button_callback, 15, EXTINT_CALLBACK_TYPE_DETECT);
-  extint_chan_enable_callback(15, EXTINT_CALLBACK_TYPE_DETECT);
+  extint_register_callback(
+      button_callback_pattern, PATTERN_BUTTON_PIN, EXTINT_CALLBACK_TYPE_DETECT);
+  extint_chan_enable_callback(PATTERN_BUTTON_PIN, EXTINT_CALLBACK_TYPE_DETECT);
 
-  button_debounce_default(&btn);
-  btn.pin = 15;
-  btn.short_press_handler = button_callback_short;
-  btn.long_press_handler = button_callback_long;
+  button_debounce_default(&btn_pattern);
+  btn_pattern.pin = PATTERN_BUTTON_PIN;
+  btn_pattern.short_press_handler = pattern_next;
+  btn_pattern.long_press_handler = pattern_off;
+
+  // Setup brightness button
+  extint_chan_get_config_defaults(&config_int);
+  config_int.gpio_pin = BRIGHT_BUTTON_PIN;
+  config_int.gpio_pin_mux = BRIGHT_BUTTON_MUX;
+  config_int.gpio_pin_pull = EXTINT_PULL_UP;
+  config_int.detection_criteria = EXTINT_DETECT_BOTH;
+  extint_chan_set_config(BRIGHT_BUTTON_PIN, &config_int);
+
+  extint_register_callback(
+      button_callback_bright, BRIGHT_BUTTON_PIN, EXTINT_CALLBACK_TYPE_DETECT);
+  extint_chan_enable_callback(BRIGHT_BUTTON_PIN, EXTINT_CALLBACK_TYPE_DETECT);
+
+  button_debounce_default(&btn_bright);
+  btn_bright.pin = BRIGHT_BUTTON_PIN;
+  btn_bright.short_press_handler = button_callback_bright_short;
+  btn_bright.long_press_handler = button_callback_bright_long;
+
+  // Start the debounce clock
   button_debounce_clock_setup();
 }
 
-static void button_callback() {
-  button_event_handler(&btn);
+static void button_callback_pattern() {
+  button_event_handler(&btn_pattern);
 }
 
-static void button_callback_short() {
-  button_count++;
+static void button_callback_bright() {
+  button_event_handler(&btn_bright);
 }
 
-static void button_callback_long() {
-  button_count = 0;
+static void button_callback_bright_short() {
+}
+
+static void button_callback_bright_long() {
 }
