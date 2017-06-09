@@ -1,9 +1,15 @@
 #include "button.h"
 
+#include <string.h>
+
 #include <tc.h>
 #include <port.h>
 
 struct tc_module button_tc_instance;
+
+void button_debounce_default(button_controller *ctrl) {
+  memset(ctrl, 0, sizeof(button_controller));
+}
 
 void button_debounce_clock_setup() {
   // This is a stupid clock to count in 128-microsecond intervals.
@@ -15,6 +21,7 @@ void button_debounce_clock_setup() {
   config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV1024;
   config_tc.run_in_standby = true;
   tc_init(&button_tc_instance, DEBOUNCE_TC, &config_tc);
+  tc_enable(&button_tc_instance);
 }
 
 void button_event_handler(button_controller *ctrl) {

@@ -18,15 +18,20 @@
 
 #include "apa102c/apa102c.h"
 #include "pattern/pattern.h"
+#include "button/button.h"
 
 
 extern struct spi_module spi_master;
 extern struct spi_slave_inst spi_slave_dev;
 
+button_controller btn;
+
 static void setup();
 static void setup_spi();
 static void button_callback();
 static void setup_button();
+static void button_callback_short();
+static void button_callback_long();
 
 #define LED_PIN_IO IOPORT_CREATE_PIN(IOPORT_PORTA, LED_PIN)
 
@@ -131,8 +136,22 @@ static void setup_button() {
 
   extint_register_callback(button_callback, 15, EXTINT_CALLBACK_TYPE_DETECT);
   extint_chan_enable_callback(15, EXTINT_CALLBACK_TYPE_DETECT);
+
+  button_debounce_default(&btn);
+  btn.pin = 15;
+  btn.short_press_handler = button_callback_short;
+  btn.long_press_handler = button_callback_long;
+  button_debounce_clock_setup();
 }
 
 static void button_callback() {
+  button_event_handler(&btn);
+}
+
+static void button_callback_short() {
   button_count++;
+}
+
+static void button_callback_long() {
+  button_count = 0;
 }

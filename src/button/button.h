@@ -27,7 +27,8 @@ typedef struct {
   uint8_t state;
 } button_controller;
 
+void button_debounce_default(button_controller *);
 void button_debounce_clock_setup();
-void button_event_handler(button_controller*);
+void button_event_handler(button_controller *);
 
 #endif // _BUTTON_H_
