@@ -11,3 +11,4 @@ src/asf
 *.lst
 *.map
 .gdb_history
+src/consts.c
