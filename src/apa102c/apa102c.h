@@ -3,7 +3,9 @@
 
 #include <compiler.h>
 
-#define CLEAR_PIXEL(x) (x) = ((pixel){0x1F, 0, 0, 0})
+#define BRIGHT_MASK   0x1f
+#define BRIGHT_MAX    BRIGHT_MASK
+#define CLEAR_PIXEL(x) (x) = ((pixel){BRIGHT_MAX, 0, 0, 0})
 
 COMPILER_PACK_SET(1)
 COMPILER_ALIGNED(4)
