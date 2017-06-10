@@ -11,6 +11,9 @@
 // TODO: compute this from prescaler
 #define US_PER_FRAME 32768
 
+// Multiply two uint8_t and get top 8 bits.
+#define MULTIPLY_SCALE(x, y)  (uint8_t)(((uint16_t)(x) * (uint16_t)(y)) >> 8)
+
 typedef void(*pattern_update_func)(uint16_t, uint8_t, pixel *);
 #define PATTERN_UPDATE_FUNC(x) void x(uint16_t, uint8_t, pixel *)
 
@@ -18,6 +21,12 @@ typedef struct {
   const char *name;
   pattern_update_func pixel_update;
 } pattern_def;
+
+// Consts for patterns
+extern const uint16_t consts_num_steps;
+extern const uint16_t consts_resolution;
+extern const uint8_t sin_table[];
+extern const uint8_t gamma_table[];
 
 // Start the pattern engine
 void pattern_start();

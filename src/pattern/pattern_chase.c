@@ -15,21 +15,13 @@ PATTERN_CHASE_COLOR(blue, 0x00, 0x00, 0xFF);
 
 void pattern_chase_wrapped(uint16_t frame, uint8_t pxnum, pixel *px,
     uint8_t r, uint8_t g, uint8_t b) {
-  int16_t cmp;
+  int16_t pos;
+  uint8_t sin_value;
 
-  // Slow things down
-  frame >>= 4;
-  cmp = abs((int16_t)frame - (int16_t)pxnum) % NUM_PIXELS;
+  pos = (frame + (pxnum * consts_resolution)) % consts_num_steps;
+  sin_value = sin_table[pos];
 
-  CLEAR_PIXEL(*px);
-  if (cmp > 1)
-    return;
-  px->red = r;
-  px->green = g;
-  px->blue = b;
-  if (cmp == 1) {
-    px->brightness = 5;
-  } else {
-    px->brightness = 10;
-  }
+  px->red = MULTIPLY_SCALE(r, sin_value);
+  px->green = MULTIPLY_SCALE(g, sin_value);
+  px->blue = MULTIPLY_SCALE(b, sin_value);
 }

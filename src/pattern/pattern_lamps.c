@@ -22,7 +22,7 @@ void pattern_bright_pwm(uint16_t u_frame, uint8_t u_pxnum, pixel *px) {
 }
 
 void pattern_ripple(uint16_t frame, uint8_t u_pxnum, pixel *px) {
-  px->red = frame &0xff;
+  px->red = frame & 0xff;
   px->green = (frame >> 4) & 0xff;
   px->blue = (frame >> 8) & 0xff;
 }

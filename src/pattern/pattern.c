@@ -2,6 +2,9 @@
 
 #include <tc.h>
 #include <tc_interrupt.h>
+#include <stdio.h>
+
+#define PATTERN_DEBUG
 
 struct tc_module tc_instance;
 
@@ -44,15 +47,18 @@ void pattern_start() {
 }
 
 void pattern_next() {
-  if (!pattern_running)
+  if (!pattern_running) {
     pattern_running = 1;
+    frame_num = 0;
+    return;
+  }
   if (defined_patterns[pattern_num+1].pixel_update != NULL) {
     pattern_num++;
   } else {
     pattern_num = 0;
   }
   frame_num = 0;
-  printf("Pattern changed to %s\n", defined_patterns[pattern_num].name);
+  printf("Pattern changed to %s\r\n", defined_patterns[pattern_num].name);
 }
 
 void pattern_off() {
@@ -67,9 +73,13 @@ void pattern_off() {
   frame_num = 0;
 }
 
-void frame_next(struct tc_module *unused_module) {
+void frame_next(struct tc_module *module) {
   pixel px;
   uint8_t pos;
+
+#ifdef PATTERN_DEBUG
+  uint8_t slices = (uint8_t)tc_get_count_value(module);
+#endif
 
   if (!pattern_running)
     return;
@@ -78,6 +88,11 @@ void frame_next(struct tc_module *unused_module) {
   for (pos=0;pos<NUM_PIXELS;pos++) {
     CLEAR_PIXEL(px);
     defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
+#ifndef DISABLE_GAMMA_CORRECT
+    px.red = gamma_table[px.red];
+    px.green = gamma_table[px.green];
+    px.blue = gamma_table[px.blue];
+#endif
     px.brightness = (px.brightness & BRIGHT_MASK) >> global_brightness_scale;
     apa102c_send_pixel(&px);
   }
@@ -85,6 +100,11 @@ void frame_next(struct tc_module *unused_module) {
   frame_num++;
   if (frame_num >= FRAME_NUM_MAX)
     frame_num -= FRAME_NUM_MAX;
+
+#ifdef PATTERN_DEBUG
+  slices = (uint8_t)tc_get_count_value(module) - slices;
+  printf("Spent %d slices on frame.\r\n", slices);
+#endif
 }
 
 

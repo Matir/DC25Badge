@@ -102,7 +102,7 @@ static void setup_spi() {
   cfg.mode_specific.master.baudrate = 100000;  // 100k for now
   if (spi_init(&spi_master, SERCOM1, &cfg) != STATUS_OK )
   {
-    printf("Failed to setup SPI instance.\n");
+    printf("Failed to setup SPI instance.\r\n");
     return;
   }
   spi_enable(&spi_master);

@@ -103,10 +103,10 @@ LDFLAGS = $(COMMON_FLAGS) \
 PATTERNS=$(wildcard pattern/pattern_*.c)
 
 OBJS = main.o \
-			 consts.o \
 			 usb/stdio_usb.o \
 			 apa102c/apa102c.o \
 			 pattern/pattern.o \
+			 pattern/consts.o \
 			 button/button.o \
 			 $(PATTERNS:%.c=%.o) \
 			 $(DEP_OBJS)
@@ -129,9 +129,9 @@ $(PROJNAME).elf: $(OBJS)
 %.o: %.c $(CONFIG_HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-consts.c: tools/gentable.py $(CONFIG_HEADERS)
+pattern/consts.c: tools/gentable.py $(CONFIG_HEADERS)
 	$(eval NUMPX=$(shell $(CC) -E $(CFLAGS) -I . -x c <(echo -e '#include <config.h>\nNUM_PIXELS') | tail -1))
-	python tools/gentable.py $(NUMPX) $@
+	python tools/gentable.py $(NUMPX) 30 $@
 
 $(PROJNAME).map: $(PROJNAME).elf
 
