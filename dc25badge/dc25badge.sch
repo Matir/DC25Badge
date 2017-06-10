@@ -462,7 +462,7 @@ Connection ~ 2400 850
 Wire Wire Line
 	950  850  950  2400
 Wire Wire Line
-	950  850  1200 850 
+	700  850  1200 850 
 Connection ~ 1200 850 
 Connection ~ 950  1750
 Wire Notes Line
@@ -828,7 +828,7 @@ Wire Wire Line
 	950  1750 3700 1750
 Connection ~ 4150 2550
 Wire Wire Line
-	2850 2550 5650 2550
+	2850 2550 5900 2550
 Wire Wire Line
 	3600 2550 3600 2400
 Wire Wire Line
@@ -847,9 +847,9 @@ F 3 "" H 4150 1400 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	4600 1850 4700 1850
+	4700 1850 4600 1850
 Wire Wire Line
-	4700 1850 4700 1400
+	4700 1400 4700 1850
 Wire Wire Line
 	4700 1400 4300 1400
 Wire Wire Line
@@ -934,8 +934,6 @@ Wire Wire Line
 	4900 2400 4900 2550
 Connection ~ 4900 2550
 Wire Wire Line
-	4600 1950 5650 1950
-Wire Wire Line
 	5400 1950 5400 2200
 Wire Wire Line
 	4600 2050 4700 2050
@@ -943,10 +941,10 @@ Wire Wire Line
 	4700 2050 4700 1950
 Connection ~ 4700 1950
 Wire Wire Line
-	4900 2200 4900 1950
+	4900 1950 4900 2200
 Connection ~ 4900 1950
 Wire Wire Line
-	5150 2200 5150 1950
+	5150 1950 5150 2200
 Connection ~ 5150 1950
 Connection ~ 5400 1950
 NoConn ~ 3650 4150
@@ -1132,4 +1130,50 @@ Wire Wire Line
 	7200 5300 7350 5300
 Wire Wire Line
 	7550 5300 7700 5300
+$Comp
+L C_Small C23
+U 1 1 593C3098
+P 5900 2300
+F 0 "C23" H 5950 2350 50  0000 L CNN
+F 1 "NP" H 5950 2200 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805" H 5900 2300 50  0001 C CNN
+F 3 "" H 5900 2300 50  0000 C CNN
+	1    5900 2300
+	1    0    0    -1  
+$EndComp
+Connection ~ 5650 1950
+Connection ~ 5650 2550
+Wire Wire Line
+	4600 1950 5900 1950
+Wire Wire Line
+	5900 1950 5900 2200
+Wire Wire Line
+	5900 2550 5900 2400
+$Comp
+L C_Small C28
+U 1 1 593C40FA
+P 700 1500
+F 0 "C28" H 710 1570 50  0000 L CNN
+F 1 "NP" H 710 1420 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805" H 700 1500 50  0001 C CNN
+F 3 "" H 700 1500 50  0000 C CNN
+	1    700  1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  1400 700  850 
+Connection ~ 950  850 
+$Comp
+L GND #PWR026
+U 1 1 593C428E
+P 700 1700
+F 0 "#PWR026" H 700 1450 50  0001 C CNN
+F 1 "GND" H 700 1550 50  0000 C CNN
+F 2 "" H 700 1700 50  0000 C CNN
+F 3 "" H 700 1700 50  0000 C CNN
+	1    700  1700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  1700 700  1600
 $EndSCHEMATC

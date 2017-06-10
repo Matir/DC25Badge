@@ -1,5 +1,5 @@
 Drill report for /home/david/Projects/DC25Badge/dc25badge/dc25badge.kicad_pcb
-Created on Sun 04 Jun 2017 02:23:08 PM PDT
+Created on Sat 10 Jun 2017 11:00:12 AM PDT
 
 Copper Layer Stackup:
     =============================================================
@@ -10,10 +10,10 @@ Copper Layer Stackup:
 Drill file 'dc25badge.drl' contains
     plated through holes:
     =============================================================
-    T1  0.30mm  0.012"  (86 holes)
+    T1  0.30mm  0.012"  (87 holes)
     T2  4.00mm  0.157"  (2 holes)
 
-    Total plated holes count 88
+    Total plated holes count 89
 
 
 Drill file 'dc25badge-NPTH.drl' contains
