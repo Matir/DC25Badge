@@ -27,7 +27,7 @@ void apa102c_send_pixel(pixel *data){
   spi_get_job_status_wait(&spi_master);
   local_copy = *data;
   local_copy.brightness |= 0xe0;
-  spi_send((uint8_t *)&local_copy, sizeof(pixel));
+  spi_send_async((uint8_t *)&local_copy, sizeof(pixel));
   num_pixels++;
 }
 

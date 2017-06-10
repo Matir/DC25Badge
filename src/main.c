@@ -39,11 +39,11 @@ static void button_callback_bright_long();
 
 int main() {
   setup();
+  // Blink LED to start process
+  ioport_toggle_pin_level(LED_PIN_IO);
+  delay_ms(250);
+  ioport_toggle_pin_level(LED_PIN_IO);
   pattern_start();
-  while(1) {
-    ioport_toggle_pin_level(LED_PIN_IO);
-    delay_ms(1000);
-  }
 }
 
 static void setup() {
@@ -63,6 +63,8 @@ static void setup() {
   stdio_usb_disable();
 
   setup_spi();
+
+  pattern_setup();
 
   setup_buttons();
 }

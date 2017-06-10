@@ -4,14 +4,13 @@
 #include <tc_interrupt.h>
 #include <stdio.h>
 
-#define PATTERN_DEBUG
-
 struct tc_module tc_instance;
 
 uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
 uint8_t global_brightness_scale = 0;
 uint8_t pattern_running = 1;
+uint8_t pattern_tick = 1;
 
 const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
@@ -24,7 +23,9 @@ const pattern_def defined_patterns[] = {
   {NULL, NULL},
 };
 
-void pattern_start() {
+static void frame_next_tick();
+
+void pattern_setup() {
   // Start periodic interrupts to call frame_next.
   // An 8MHz GCLK with a 1024 prescaler into an 8-bit counter = 32.768ms
   struct tc_config config_tc;
@@ -38,12 +39,25 @@ void pattern_start() {
 
   // Start things up
   tc_init(&tc_instance, PATTERN_TC, &config_tc);
-  tc_register_callback(&tc_instance, frame_next, TC_CALLBACK_OVERFLOW);
+  tc_register_callback(&tc_instance, frame_next_tick, TC_CALLBACK_OVERFLOW);
   tc_enable_callback(&tc_instance, TC_CALLBACK_OVERFLOW);
   tc_enable(&tc_instance);
+}
 
-  // Draw the first frame
-  frame_next(&tc_instance);
+void pattern_start() {
+  while(1) {
+    if (pattern_tick > 1) {
+      printf("Pattern overflow!\r\n");
+    }
+    frame_next(&tc_instance);
+    pattern_tick--;
+    // TODO: standby mode
+    while(!pattern_tick){}
+  }
+}
+
+static void frame_next_tick() {
+  pattern_tick++;
 }
 
 void pattern_next() {
@@ -106,7 +120,6 @@ void frame_next(struct tc_module *module) {
   printf("Spent %d slices on frame.\r\n", slices);
 #endif
 }
-
 
 /* Position information for XXV */
 uint8_t pixel_get_row(uint8_t num) {
