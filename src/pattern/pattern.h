@@ -37,11 +37,8 @@ void pattern_start();
 // Change patterns
 void pattern_next();
 
-// Go to the next frame
-void frame_next();
-
 // Turn off all pixels
-void pattern_off();
+void pattern_shutdown();
 
 // Get pixel position information
 uint8_t pixel_get_row(uint8_t num);

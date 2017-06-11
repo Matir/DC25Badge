@@ -6,11 +6,15 @@
 
 struct tc_module tc_instance;
 
+#define STATE_RUNNING   0
+#define STATE_STOPPING  1
+#define STATE_STOPPED   2
+
 uint16_t pattern_num = 0;
 uint16_t frame_num = 0;
 uint8_t global_brightness_scale = 0;
-uint8_t pattern_running = 1;
-uint8_t pattern_tick = 1;
+uint8_t pattern_state = STATE_RUNNING;
+uint8_t pattern_tick = 0;
 
 const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
@@ -23,7 +27,9 @@ const pattern_def defined_patterns[] = {
   {NULL, NULL},
 };
 
-static void frame_next_tick();
+static void frame_next_tick(struct tc_module *);
+static void frame_next();
+static void pattern_off();
 
 void pattern_setup() {
   // Start periodic interrupts to call frame_next.
@@ -45,24 +51,38 @@ void pattern_setup() {
 }
 
 void pattern_start() {
+  int idle = 0;
   while(1) {
+    while (pattern_state == STATE_STOPPED){
+      pattern_tick = 0;
+    }
+
+    // Stop if needed
+    if (pattern_state == STATE_STOPPING) {
+      pattern_off();
+      pattern_state = STATE_STOPPED;
+      continue;
+    }
+
     if (pattern_tick > 1) {
       printf("Pattern overflow!\r\n");
     }
-    frame_next(&tc_instance);
+    frame_next();
     pattern_tick--;
     // TODO: standby mode
-    while(!pattern_tick){}
+    while(!pattern_tick){
+      idle++;
+    }
+    if ((frame_num & 0x1f) == 0) {
+      printf("Idle: %d\r\n", idle);
+      idle = 0;
+    }
   }
 }
 
-static void frame_next_tick() {
-  pattern_tick++;
-}
-
 void pattern_next() {
-  if (!pattern_running) {
-    pattern_running = 1;
+  if (pattern_state == STATE_STOPPED) {
+    pattern_state = STATE_RUNNING;
     frame_num = 0;
     return;
   }
@@ -75,50 +95,8 @@ void pattern_next() {
   printf("Pattern changed to %s\r\n", defined_patterns[pattern_num].name);
 }
 
-void pattern_off() {
-  // Turn off all the pixels
-  int i;
-  pattern_running = 0;
-  pixel empty = {0,0,0,0};
-  apa102c_frame_begin();
-  for (i=0;i<NUM_PIXELS;i++)
-    apa102c_send_pixel(&empty);
-  apa102c_frame_end();
-  frame_num = 0;
-}
-
-void frame_next(struct tc_module *module) {
-  pixel px;
-  uint8_t pos;
-
-#ifdef PATTERN_DEBUG
-  uint8_t slices = (uint8_t)tc_get_count_value(module);
-#endif
-
-  if (!pattern_running)
-    return;
-
-  apa102c_frame_begin();
-  for (pos=0;pos<NUM_PIXELS;pos++) {
-    CLEAR_PIXEL(px);
-    defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
-#ifndef DISABLE_GAMMA_CORRECT
-    px.red = gamma_table[px.red];
-    px.green = gamma_table[px.green];
-    px.blue = gamma_table[px.blue];
-#endif
-    px.brightness = (px.brightness & BRIGHT_MASK) >> global_brightness_scale;
-    apa102c_send_pixel(&px);
-  }
-  apa102c_frame_end();
-  frame_num++;
-  if (frame_num >= FRAME_NUM_MAX)
-    frame_num -= FRAME_NUM_MAX;
-
-#ifdef PATTERN_DEBUG
-  slices = (uint8_t)tc_get_count_value(module) - slices;
-  printf("Spent %d slices on frame.\r\n", slices);
-#endif
+void pattern_shutdown() {
+  pattern_state = STATE_STOPPING;
 }
 
 /* Position information for XXV */
@@ -149,4 +127,44 @@ uint8_t pixel_get_col_fine(uint8_t num) {
   if (num < 8)
     return num + block;
   return (7 - (num & 7)) + block;
+}
+
+/* Internal implementation details */
+
+static void frame_next_tick(struct tc_module *unused_module) {
+  pattern_tick++;
+}
+
+
+static void pattern_off() {
+  // Turn off all the pixels
+  int i;
+  pixel empty = {0,0,0,0};
+  apa102c_frame_begin();
+  for (i=0;i<NUM_PIXELS;i++)
+    apa102c_send_pixel(&empty);
+  apa102c_frame_end();
+  frame_num = 0;
+}
+
+static void frame_next() {
+  pixel px;
+  uint8_t pos;
+
+  apa102c_frame_begin();
+  for (pos=0;pos<NUM_PIXELS;pos++) {
+    CLEAR_PIXEL(px);
+    defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
+#ifndef DISABLE_GAMMA_CORRECT
+    px.red = gamma_table[px.red];
+    px.green = gamma_table[px.green];
+    px.blue = gamma_table[px.blue];
+#endif
+    px.brightness = (px.brightness & BRIGHT_MASK) >> global_brightness_scale;
+    apa102c_send_pixel(&px);
+  }
+  apa102c_frame_end();
+  frame_num++;
+  if (frame_num >= FRAME_NUM_MAX)
+    frame_num -= FRAME_NUM_MAX;
 }

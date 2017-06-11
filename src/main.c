@@ -101,7 +101,7 @@ static void setup_spi() {
 # error "Unknown board config."
 #endif
   cfg.receiver_enable = false; // One way
-  cfg.mode_specific.master.baudrate = 100000;  // 100k for now
+  cfg.mode_specific.master.baudrate = SPI_SPEED;
   if (spi_init(&spi_master, SERCOM1, &cfg) != STATUS_OK )
   {
     printf("Failed to setup SPI instance.\r\n");
@@ -144,7 +144,7 @@ static void setup_buttons() {
   button_debounce_default(&btn_pattern);
   btn_pattern.pin = PATTERN_BUTTON_PIN;
   btn_pattern.short_press_handler = pattern_next;
-  btn_pattern.long_press_handler = pattern_off;
+  btn_pattern.long_press_handler = pattern_shutdown;
 
   // Setup brightness button
   extint_chan_get_config_defaults(&config_int);

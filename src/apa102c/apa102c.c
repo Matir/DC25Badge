@@ -34,10 +34,10 @@ void apa102c_send_pixel(pixel *data){
 void apa102c_frame_end(){
   // Send end marker, 1 bit per pixel
   int num_frames = (num_pixels + 31) >> 5;
-  spi_select_slave(&spi_master, &spi_slave_dev, false);
   do {
     spi_send(null_frame, sizeof(pixel));
   } while(--num_frames);
+  spi_select_slave(&spi_master, &spi_slave_dev, false);
 }
 
 inline void spi_send(const uint8_t *buffer, uint16_t count) {
