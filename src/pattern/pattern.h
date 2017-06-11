@@ -28,17 +28,17 @@ extern const uint16_t consts_resolution;
 extern const uint8_t sin_table[];
 extern const uint8_t gamma_table[];
 
-// Start the pattern engine
+// Setup the pattern engine
+void pattern_setup();
+
+// Run the pattern engine forever
 void pattern_start();
 
 // Change patterns
 void pattern_next();
 
-// Go to the next frame
-void frame_next();
-
 // Turn off all pixels
-void pattern_off();
+void pattern_shutdown();
 
 // Get pixel position information
 uint8_t pixel_get_row(uint8_t num);
