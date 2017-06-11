@@ -10,11 +10,11 @@ struct tc_module tc_instance;
 #define STATE_STOPPING  1
 #define STATE_STOPPED   2
 
-uint16_t pattern_num = 0;
-uint16_t frame_num = 0;
-uint8_t global_brightness_scale = 0;
-uint8_t pattern_state = STATE_RUNNING;
-uint8_t pattern_tick = 0;
+volatile uint16_t pattern_num = 0;
+volatile uint16_t frame_num = 0;
+volatile uint8_t global_brightness_scale = 0;
+volatile uint8_t pattern_state = STATE_RUNNING;
+volatile uint8_t pattern_tick = 0;
 
 const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
@@ -41,7 +41,7 @@ void pattern_setup() {
   config_tc.clock_source = GCLK_GENERATOR_0;
   config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV1024;
   config_tc.run_in_standby = true;
-  config_tc.counter_8_bit.period = 255;
+  config_tc.counter_8_bit.period = 255;  // Can get a little faster ~127
 
   // Start things up
   tc_init(&tc_instance, PATTERN_TC, &config_tc);
@@ -73,7 +73,7 @@ void pattern_start() {
     while(!pattern_tick){
       idle++;
     }
-    if ((frame_num & 0x1f) == 0) {
+    if ((frame_num & 0xff) == 0) {
       printf("Idle: %d\r\n", idle);
       idle = 0;
     }

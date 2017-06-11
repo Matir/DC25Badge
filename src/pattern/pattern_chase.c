@@ -18,7 +18,7 @@ void pattern_chase_wrapped(uint16_t frame, uint8_t pxnum, pixel *px,
   int16_t pos;
   uint8_t sin_value;
 
-  pos = (frame + (pxnum * consts_resolution)) % consts_num_steps;
+  pos = ((frame * 4 + (pxnum * consts_resolution))) % consts_num_steps;
   sin_value = sin_table[pos];
 
   px->red = MULTIPLY_SCALE(r, sin_value);

@@ -3,7 +3,7 @@
 
 #define PATTERN_TC TC3
 #define DEBOUNCE_TC TC4
-#define SPI_SPEED 400000
+#define SPI_SPEED 100000
 
 #if defined(XBOARD_SPARKFUN)
 # include <samd21g18a.h>
