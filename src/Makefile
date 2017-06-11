@@ -13,6 +13,11 @@ else
 	TARGET = SAMD21E18A
 endif
 
+DEBUGGER = ft232h
+
+# End configurables
+
+
 INC = \
 			./config \
 			./usb \
@@ -159,7 +164,7 @@ burnin: bootloader
 
 .PHONY: openocd gdb
 openocd:
-	openocd -f ./openocd.cfg
+	openocd -f ./openocd/openocd-$(DEBUGGER).cfg
 
 gdb:
 	gdb-multiarch -n -ex 'file ./$(PROJNAME).elf' \
