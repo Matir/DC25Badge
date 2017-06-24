@@ -41,8 +41,8 @@ static volatile bool main_b_cdc_enable = false;
  */
 static void check_start_application(void)
 {
-//  LED_init();
-//  LED_off();
+  LED_init();
+  LED_on();
 
 #if (!defined DEBUG) || ((defined DEBUG) && (DEBUG == 0))
 uint32_t* pulSketch_Start_Address;
@@ -108,7 +108,7 @@ uint32_t* pulSketch_Start_Address;
   }
 #endif
 
-//  LED_on();
+  LED_off();
 
   /* Rebase the Stack Pointer */
   __set_MSP( (uint32_t)(__sketch_vectors_ptr) );
