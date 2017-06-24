@@ -34,13 +34,13 @@ LIBS:switches
 LIBS:dc25badge-cache
 EELAYER 25 0
 EELAYER END
-$Descr A4 11693 8268
+$Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 2
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "DC25 Badge XXV"
+Date "2017-06-24"
+Rev "2"
+Comp "@Matir"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -1176,4 +1176,6 @@ F 3 "" H 700 1700 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	700  1700 700  1600
+Text Label 1050 2500 1    60   ~ 0
+BNEG
 $EndSCHEMATC

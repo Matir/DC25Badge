@@ -37,10 +37,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 2
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "DC25 Badge XXV"
+Date "2017-06-24"
+Rev "2"
+Comp "@Matir"
 Comment1 ""
 Comment2 ""
 Comment3 ""
