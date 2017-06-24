@@ -1178,4 +1178,25 @@ Wire Wire Line
 	700  1700 700  1600
 Text Label 1050 2500 1    60   ~ 0
 BNEG
+$Comp
+L Jumper_NO_Small JP?
+U 1 1 594EF10E
+P 1250 2650
+F 0 "JP?" H 1250 2550 50  0000 C CNN
+F 1 "Jumper_NO_Small" H 1260 2590 50  0001 C CNN
+F 2 "" H 1250 2650 50  0000 C CNN
+F 3 "" H 1250 2650 50  0000 C CNN
+	1    1250 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 2650 950  2650
+Wire Wire Line
+	950  2650 950  2500
+Wire Wire Line
+	1350 2650 1500 2650
+Wire Wire Line
+	1500 2650 1500 2500
+Connection ~ 1500 2500
+Connection ~ 950  2500
 $EndSCHEMATC
