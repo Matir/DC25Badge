@@ -1,8 +1,1 @@
-- Button support for mode switching & brightness
-- Long press support
-- Debounce code
-  - Maximum amount of time we expect a button to be held? 10s?
-  - Minimum amount of time we expect a button to be held? 50ms?
-  - So need a counter with resolution << 50ms and wrap time >>10s
-  - Assume 1000 steps per hold?  16-bit counter?
-  -
+- CPU stuck in reset with debugger connected

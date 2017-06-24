@@ -4,7 +4,9 @@
 
 // These must be configured by a linked module
 struct spi_module spi_master;
+#ifdef SS_PIN
 struct spi_slave_inst spi_slave_dev;
+#endif
 
 void spi_send(const uint8_t *buffer, uint16_t count);
 void spi_send_async(const uint8_t *buffer, uint16_t count);
@@ -15,7 +17,9 @@ int num_pixels = 0;
 
 void apa102c_frame_begin(){
   num_pixels = 0;
+#ifdef SS_PIN
   spi_select_slave(&spi_master, &spi_slave_dev, true);
+#endif
   // Send start marker
   spi_send(null_frame, sizeof(pixel));
 }
@@ -37,7 +41,9 @@ void apa102c_frame_end(){
   do {
     spi_send(null_frame, sizeof(pixel));
   } while(--num_frames);
+#ifdef SS_PIN
   spi_select_slave(&spi_master, &spi_slave_dev, false);
+#endif
 }
 
 inline void spi_send(const uint8_t *buffer, uint16_t count) {

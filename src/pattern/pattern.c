@@ -12,7 +12,7 @@ struct tc_module tc_instance;
 
 volatile uint16_t pattern_num = 0;
 volatile uint16_t frame_num = 0;
-volatile uint8_t global_brightness_scale = 0;
+volatile uint8_t global_brightness_scale = 2;
 volatile uint8_t pattern_state = STATE_RUNNING;
 volatile uint8_t pattern_tick = 0;
 
@@ -33,15 +33,15 @@ static void pattern_off();
 
 void pattern_setup() {
   // Start periodic interrupts to call frame_next.
-  // An 8MHz GCLK with a 1024 prescaler into an 8-bit counter = 32.768ms
+  // An 1MHz GCLK with a 256 prescaler into an 7-bit counter = 32.768ms
   struct tc_config config_tc;
   tc_get_config_defaults(&config_tc);
 
   config_tc.counter_size = TC_COUNTER_SIZE_8BIT;
-  config_tc.clock_source = GCLK_GENERATOR_0;
-  config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV1024;
+  config_tc.clock_source = GCLK_GENERATOR_1;
+  config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV256;
   config_tc.run_in_standby = true;
-  config_tc.counter_8_bit.period = 255;  // Can get a little faster ~127
+  config_tc.counter_8_bit.period = 128;
 
   // Start things up
   tc_init(&tc_instance, PATTERN_TC, &config_tc);
@@ -83,6 +83,7 @@ void pattern_start() {
 void pattern_next() {
   if (pattern_state == STATE_STOPPED) {
     pattern_state = STATE_RUNNING;
+    pattern_tick = 1;
     frame_num = 0;
     return;
   }
@@ -139,6 +140,7 @@ static void frame_next_tick(struct tc_module *unused_module) {
 static void pattern_off() {
   // Turn off all the pixels
   int i;
+  printf("Pattern off\r\n");
   pixel empty = {0,0,0,0};
   apa102c_frame_begin();
   for (i=0;i<NUM_PIXELS;i++)
@@ -150,11 +152,12 @@ static void pattern_off() {
 static void frame_next() {
   pixel px;
   uint8_t pos;
+  pattern_update_func update_func = defined_patterns[pattern_num].pixel_update;
 
   apa102c_frame_begin();
   for (pos=0;pos<NUM_PIXELS;pos++) {
     CLEAR_PIXEL(px);
-    defined_patterns[pattern_num].pixel_update(frame_num, pos, &px);
+    update_func(frame_num, pos, &px);
 #ifndef DISABLE_GAMMA_CORRECT
     px.red = gamma_table[px.red];
     px.green = gamma_table[px.green];

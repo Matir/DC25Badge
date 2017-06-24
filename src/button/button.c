@@ -12,11 +12,12 @@ void button_debounce_default(button_controller *ctrl) {
 }
 
 void button_debounce_clock_setup() {
-  // This is a stupid clock to count in 128-microsecond intervals.
+  // This is a stupid clock to count in 1-millisecond intervals.
   struct tc_config config_tc;
 
   tc_get_config_defaults(&config_tc);
 
+  config_tc.clock_source = GCLK_GENERATOR_1; // 1MHz clock
   config_tc.counter_size = TC_COUNTER_SIZE_32BIT;
   config_tc.clock_prescaler = TC_CLOCK_PRESCALER_DIV1024;
   config_tc.run_in_standby = true;
@@ -25,7 +26,7 @@ void button_debounce_clock_setup() {
 }
 
 void button_event_handler(button_controller *ctrl) {
-  // This is an approximation.  .128ms*8 ~= 1ms
+  // This is an approximation.  1MHz/1024 ~= 1ms
   uint32_t millis, elapsed;
   // Inverted because this is high when not presed
   uint8_t state = !port_pin_get_input_level(ctrl->pin);
@@ -34,7 +35,7 @@ void button_event_handler(button_controller *ctrl) {
   if (state == ctrl->state)
     return;
 
-  millis = tc_get_count_value(&button_tc_instance) >> 3;
+  millis = tc_get_count_value(&button_tc_instance);
   // Theoretically, this could wrap, but I doubt the battery will last that
   // long.
   elapsed = millis - ctrl->state_begin;

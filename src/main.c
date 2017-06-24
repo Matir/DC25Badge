@@ -76,11 +76,13 @@ static void setup_spi() {
   // CS = SERCOM1:PAD2 (AKA PA18)
 
   struct spi_config cfg;
+#ifdef SS_PIN
   struct spi_slave_inst_config slave_cfg;
 
   spi_slave_inst_get_config_defaults(&slave_cfg);
   slave_cfg.ss_pin = PIN_PA18;
   spi_attach_slave(&spi_slave_dev, &slave_cfg);
+#endif
 
   spi_get_config_defaults(&cfg);
 #if defined(XBOARD_SPARKFUN)
@@ -96,7 +98,11 @@ static void setup_spi() {
   cfg.pinmux_pad2 = PINMUX_PA18C_SERCOM1_PAD2;
   cfg.pinmux_pad3 = PINMUX_UNUSED;
 #elif defined(XBOARD_XXV)
-# error "Need mux settings."
+  cfg.mux_setting = SPI_SIGNAL_MUX_SETTING_D;
+  cfg.pinmux_pad0 = PINMUX_PA16C_SERCOM1_PAD0;
+  cfg.pinmux_pad1 = PINMUX_PA17C_SERCOM1_PAD1;
+  cfg.pinmux_pad2 = PINMUX_UNUSED;
+  cfg.pinmux_pad3 = PINMUX_UNUSED;
 #else
 # error "Unknown board config."
 #endif
@@ -120,10 +126,11 @@ void discard_stdin() {
 void terminal_connected(bool set) {
   // This is used to prevent blocking with a full buffer.
   // Requires a terminal with DTR capabilities
-  if (set)
+  if (set) {
     stdio_usb_enable();
-  else
+  } else {
     stdio_usb_disable();
+  }
 }
 
 static void setup_buttons() {
