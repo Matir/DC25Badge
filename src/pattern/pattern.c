@@ -10,9 +10,16 @@ struct tc_module tc_instance;
 #define STATE_STOPPING  1
 #define STATE_STOPPED   2
 
+// brightness options out of 0x10
+#define NUM_BRIGHTNESS_OPTIONS 4
+#define BRIGHTNESS_DEFAULT 0x10
+const uint8_t brightness_options[NUM_BRIGHTNESS_OPTIONS] =
+  {BRIGHTNESS_DEFAULT, 0x0a, 0x8, 0x4};
+
 volatile uint16_t pattern_num = 0;
 volatile uint16_t frame_num = 0;
-volatile uint8_t global_brightness_scale = 2;
+volatile uint8_t global_brightness_scale = 2; // use global
+volatile uint8_t brightness_factor = BRIGHTNESS_DEFAULT;
 volatile uint8_t pattern_state = STATE_RUNNING;
 volatile uint8_t pattern_tick = 0;
 
@@ -100,6 +107,17 @@ void pattern_shutdown() {
   pattern_state = STATE_STOPPING;
 }
 
+void pattern_bright_cycle() {
+  int i=0;
+  for(i=0;i<NUM_BRIGHTNESS_OPTIONS-1;i++) {
+    if (brightness_factor == brightness_options[i]) {
+      brightness_factor = brightness_options[i+1];
+      return;
+    }
+  }
+  brightness_factor = brightness_options[0];
+}
+
 /* Position information for XXV */
 uint8_t pixel_get_row(uint8_t num) {
   num &= 0xF;
@@ -159,9 +177,13 @@ static void frame_next() {
     CLEAR_PIXEL(px);
     update_func(frame_num, pos, &px);
 #ifndef DISABLE_GAMMA_CORRECT
-    px.red = gamma_table[px.red];
-    px.green = gamma_table[px.green];
-    px.blue = gamma_table[px.blue];
+    px.red = BRIGHTNESS_SCALE(gamma_table[px.red]);
+    px.green = BRIGHTNESS_SCALE(gamma_table[px.green]);
+    px.blue = BRIGHTNESS_SCALE(gamma_table[px.blue]);
+#else
+    px.red = BRIGHTNESS_SCALE(px.red);
+    px.green = BRIGHTNESS_SCALE(px.green);
+    px.blue = BRIGHTNESS_SCALE(px.blue);
 #endif
     px.brightness = (px.brightness & BRIGHT_MASK) >> global_brightness_scale;
     apa102c_send_pixel(&px);

@@ -32,8 +32,6 @@ static void setup_spi();
 static void setup_buttons();
 static void button_callback_pattern();
 static void button_callback_bright();
-static void button_callback_bright_short();
-static void button_callback_bright_long();
 
 #define LED_PIN_IO IOPORT_CREATE_PIN(IOPORT_PORTA, LED_PIN)
 
@@ -167,8 +165,8 @@ static void setup_buttons() {
 
   button_debounce_default(&btn_bright);
   btn_bright.pin = BRIGHT_BUTTON_PIN;
-  btn_bright.short_press_handler = button_callback_bright_short;
-  btn_bright.long_press_handler = button_callback_bright_long;
+  btn_bright.short_press_handler = pattern_bright_cycle;
+  btn_bright.long_press_handler = NULL;
 
   // Start the debounce clock
   button_debounce_clock_setup();
@@ -180,10 +178,4 @@ static void button_callback_pattern() {
 
 static void button_callback_bright() {
   button_event_handler(&btn_bright);
-}
-
-static void button_callback_bright_short() {
-}
-
-static void button_callback_bright_long() {
 }

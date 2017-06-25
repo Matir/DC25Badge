@@ -13,6 +13,7 @@
 
 // Multiply two uint8_t and get top 8 bits.
 #define MULTIPLY_SCALE(x, y)  (uint8_t)(((uint16_t)(x) * (uint16_t)(y)) >> 8)
+#define BRIGHTNESS_SCALE(x)   (uint8_t)(((uint16_t)(x) * (uint16_t)(brightness_factor)) >> 4)
 
 typedef void(*pattern_update_func)(uint16_t, uint8_t, pixel *);
 #define PATTERN_UPDATE_FUNC(x) void x(uint16_t, uint8_t, pixel *)
@@ -39,6 +40,9 @@ void pattern_next();
 
 // Turn off all pixels
 void pattern_shutdown();
+
+// Adjust brightness
+void pattern_bright_cycle();
 
 // Get pixel position information
 uint8_t pixel_get_row(uint8_t num);
