@@ -18,11 +18,12 @@ void pattern_bright_pwm(uint16_t u_frame, uint8_t u_pxnum, pixel *px) {
   px->red = 0xff;
   px->green = 0xff;
   px->blue = 0xff;
-  px->brightness = 0xf;
+  // gamma adjusted
+  px->brightness = 0x5;
 }
 
-void pattern_ripple(uint16_t frame, uint8_t u_pxnum, pixel *px) {
-  px->red = frame & 0xff;
-  px->green = (frame >> 4) & 0xff;
-  px->blue = (frame >> 8) & 0xff;
+void pattern_strobe(uint16_t frame, uint8_t u_pxnum, pixel *px) {
+  px->red = (frame & 1) ? 0xFF : 0;
+  px->green = (frame & 1) ? 0xFF : 0;
+  px->blue = (frame & 1) ? 0xFF : 0;
 }

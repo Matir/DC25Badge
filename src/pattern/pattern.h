@@ -9,7 +9,9 @@
 #define FRAME_NUM_MAX 4800
 
 // TODO: compute this from prescaler
-#define US_PER_FRAME 32768
+#define US_PER_FRAME    32768
+#define MS_PER_FRAME    (US_PER_FRAME / 1000)
+#define FRAMES_PER_SEC  (1000000 / US_PER_FRAME)
 
 // Multiply two uint8_t and get top 8 bits.
 #define MULTIPLY_SCALE(x, y)  (uint8_t)(((uint16_t)(x) * (uint16_t)(y)) >> 8)
@@ -23,11 +25,19 @@ typedef struct {
   pattern_update_func pixel_update;
 } pattern_def;
 
+typedef struct {
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} struct_rgb;
+
 // Consts for patterns
 extern const uint16_t consts_num_steps;
 extern const uint16_t consts_resolution;
 extern const uint8_t sin_table[];
 extern const uint8_t gamma_table[];
+extern const uint8_t gamma_min_idx;
+extern const struct_rgb colorwheel[];
 
 // Setup the pattern engine
 void pattern_setup();
@@ -56,6 +66,8 @@ PATTERN_UPDATE_FUNC(pattern_chase_blue);
 PATTERN_UPDATE_FUNC(pattern_bright);
 PATTERN_UPDATE_FUNC(pattern_bright_half);
 PATTERN_UPDATE_FUNC(pattern_bright_pwm);
-PATTERN_UPDATE_FUNC(pattern_ripple);
+PATTERN_UPDATE_FUNC(pattern_strobe);
+PATTERN_UPDATE_FUNC(pattern_letters);
+PATTERN_UPDATE_FUNC(pattern_wave_colors);
 
 #endif // _PATTERN_H_

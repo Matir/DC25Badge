@@ -18,7 +18,7 @@ const uint8_t brightness_options[NUM_BRIGHTNESS_OPTIONS] =
 
 volatile uint16_t pattern_num = 0;
 volatile uint16_t frame_num = 0;
-volatile uint8_t global_brightness_scale = 2; // use global
+volatile uint8_t global_brightness_scale = 3; // use global
 volatile uint8_t brightness_factor = BRIGHTNESS_DEFAULT;
 volatile uint8_t pattern_state = STATE_RUNNING;
 volatile uint8_t pattern_tick = 0;
@@ -27,10 +27,11 @@ const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
   {"Red Chase", pattern_chase_red},
   {"Blue Chase", pattern_chase_blue},
-  {"Max Bright", pattern_bright},
+  // {"Max Bright", pattern_bright},  // Causes reset due to voltage drop
   {"50%", pattern_bright_half},
-  {"50% PWM", pattern_bright_pwm},
-  {"Ripple", pattern_ripple},
+  // {"50% PWM", pattern_bright_pwm}, // Only needed for current testing
+  {"Letters", pattern_letters},
+  {"Color Wave", pattern_wave_colors},
   {NULL, NULL},
 };
 
@@ -177,9 +178,9 @@ static void frame_next() {
     CLEAR_PIXEL(px);
     update_func(frame_num, pos, &px);
 #ifndef DISABLE_GAMMA_CORRECT
-    px.red = BRIGHTNESS_SCALE(gamma_table[px.red]);
-    px.green = BRIGHTNESS_SCALE(gamma_table[px.green]);
-    px.blue = BRIGHTNESS_SCALE(gamma_table[px.blue]);
+    px.red = gamma_table[BRIGHTNESS_SCALE(px.red)];
+    px.green = gamma_table[BRIGHTNESS_SCALE(px.green)];
+    px.blue = gamma_table[BRIGHTNESS_SCALE(px.blue)];
 #else
     px.red = BRIGHTNESS_SCALE(px.red);
     px.green = BRIGHTNESS_SCALE(px.green);
