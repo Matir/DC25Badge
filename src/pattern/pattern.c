@@ -3,6 +3,7 @@
 #include <tc.h>
 #include <tc_interrupt.h>
 #include <stdio.h>
+#include <sleepmgr.h>
 
 struct tc_module tc_instance;
 
@@ -60,10 +61,16 @@ void pattern_setup() {
 }
 
 void pattern_start() {
+#ifdef DEBUG
   int idle = 0;
+#endif
   while(1) {
     while (pattern_state == STATE_STOPPED){
+      // TODO: disable clock interrupts when stopped
       pattern_tick = 0;
+#ifndef DEBUG
+      sleepmgr_enter_sleep();
+#endif
     }
 
     // Stop if needed
@@ -73,19 +80,25 @@ void pattern_start() {
       continue;
     }
 
+#ifdef DEBUG
     if (pattern_tick > 1) {
       printf("Pattern overflow!\r\n");
     }
+#endif
     frame_next();
     pattern_tick--;
-    // TODO: standby mode
     while(!pattern_tick){
+#ifdef DEBUG
       idle++;
     }
     if ((frame_num & 0xff) == 0) {
       printf("Idle: %d\r\n", idle);
       idle = 0;
     }
+#else
+      sleepmgr_enter_sleep();
+    }
+#endif
   }
 }
 

@@ -13,6 +13,8 @@ else
 	TARGET = SAMD21E18A
 endif
 
+DEBUG = 1
+
 DEBUGGER = ft232h
 
 # End configurables
@@ -88,11 +90,17 @@ DEP_OBJS = \
 
 COMMON_FLAGS = -mcpu=cortex-m0plus -mthumb
 
-CFLAGS = $(COMMON_FLAGS) -Wall -Werror -std=gnu11 -g -O0 -pipe \
+CFLAGS = $(COMMON_FLAGS) -Wall -Werror -std=gnu11 -g -pipe \
 	-D__$(TARGET)__ -DTARGET=$(TARGET) -DSYSTICK_MODE -DARM_MATH_CM0PLUS \
 	-Dprintf=iprintf -Wno-unused-but-set-variable -fno-strict-aliasing \
 	-DXBOARD_$(XBOARD) -nostartfiles -DTC_ASYNC=true \
 	-DEXTINT_CALLBACK_MODE=true \
+
+ifeq ($(DEBUG),1)
+	CFLAGS += -DDEBUG -O0
+else
+	CFLAGS += -Os 
+endif
 
 
 CFLAGS += $(addprefix -I ,$(INC))

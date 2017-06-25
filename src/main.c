@@ -51,6 +51,7 @@ static void setup() {
   system_interrupt_enable_global();
   delay_init();
   sleepmgr_init();
+  sleepmgr_lock_mode(SLEEPMGR_IDLE_2);  // This should work
   ioport_init();
 
   ioport_set_pin_dir(LED_PIN_IO, IOPORT_DIR_OUTPUT);
