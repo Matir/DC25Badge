@@ -166,7 +166,7 @@ static void setup_buttons() {
   button_debounce_default(&btn_bright);
   btn_bright.pin = BRIGHT_BUTTON_PIN;
   btn_bright.short_press_handler = pattern_bright_cycle;
-  btn_bright.long_press_handler = NULL;
+  btn_bright.long_press_handler = pattern_blind_toggle;
 
   // Start the debounce clock
   button_debounce_clock_setup();

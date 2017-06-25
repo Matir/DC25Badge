@@ -54,6 +54,9 @@ void pattern_shutdown();
 // Adjust brightness
 void pattern_bright_cycle();
 
+// Make it blinding
+void pattern_blind_toggle();
+
 // Get pixel position information
 uint8_t pixel_get_row(uint8_t num);
 uint8_t pixel_get_col_coarse(uint8_t num);

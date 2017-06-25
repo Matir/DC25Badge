@@ -16,9 +16,10 @@ struct tc_module tc_instance;
 const uint8_t brightness_options[NUM_BRIGHTNESS_OPTIONS] =
   {BRIGHTNESS_DEFAULT, 0x0a, 0x8, 0x4};
 
+#define DEFAULT_GLOBAL_BRIGHTNESS_SCALE 3
 volatile uint16_t pattern_num = 0;
 volatile uint16_t frame_num = 0;
-volatile uint8_t global_brightness_scale = 3; // use global
+volatile uint8_t global_brightness_scale = DEFAULT_GLOBAL_BRIGHTNESS_SCALE; // use global
 volatile uint8_t brightness_factor = BRIGHTNESS_DEFAULT;
 volatile uint8_t pattern_state = STATE_RUNNING;
 volatile uint8_t pattern_tick = 0;
@@ -118,6 +119,22 @@ void pattern_bright_cycle() {
   }
   brightness_factor = brightness_options[0];
 }
+
+void pattern_blind_toggle() {
+  static uint8_t long_press_count = 0;
+  if (long_press_count < 3) {
+    long_press_count++;
+    return;
+  }
+  if (global_brightness_scale == DEFAULT_GLOBAL_BRIGHTNESS_SCALE) {
+    global_brightness_scale = 0;
+    brightness_factor = BRIGHTNESS_DEFAULT;
+    return;
+  }
+  global_brightness_scale = DEFAULT_GLOBAL_BRIGHTNESS_SCALE;
+  long_press_count = 0;
+}
+
 
 /* Position information for XXV */
 uint8_t pixel_get_row(uint8_t num) {
