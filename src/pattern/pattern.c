@@ -29,6 +29,7 @@ const pattern_def defined_patterns[] = {
   {"White Chase", pattern_chase_white},
   {"Red Chase", pattern_chase_red},
   {"Blue Chase", pattern_chase_blue},
+  {"Green Chase", pattern_chase_green},
   // {"Max Bright", pattern_bright},  // Causes reset due to voltage drop
   {"50%", pattern_bright_half},
   // {"50% PWM", pattern_bright_pwm}, // Only needed for current testing

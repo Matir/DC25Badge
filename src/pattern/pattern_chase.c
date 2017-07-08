@@ -12,6 +12,7 @@ static void pattern_chase_wrapped(
 PATTERN_CHASE_COLOR(red, 0xFF, 0x00, 0x00);
 PATTERN_CHASE_COLOR(white, 0xFF, 0xFF, 0xFF);
 PATTERN_CHASE_COLOR(blue, 0x00, 0x00, 0xFF);
+PATTERN_CHASE_COLOR(green, 0x00, 0xFF, 0x00);
 
 void pattern_chase_wrapped(uint16_t frame, uint8_t pxnum, pixel *px,
     uint8_t r, uint8_t g, uint8_t b) {
