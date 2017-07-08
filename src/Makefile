@@ -169,7 +169,8 @@ bootloader:
 .PHONY: burnin
 burnin: bootloader
 	openocd -f ./openocd/openocd-$(DEBUGGER).cfg -c 'init' \
-		-c 'program bootloader/samd21_sam_ba.bin 0 verify reset'
+		-c 'program bootloader/samd21_sam_ba.bin 0 verify reset' \
+		-c 'shutdown'
 
 .PHONY: openocd gdb
 openocd:
