@@ -41,7 +41,6 @@ static volatile bool main_b_cdc_enable = false;
  */
 static void check_start_application(void)
 {
-  LED_init();
   LED_on();
 
 #if (!defined DEBUG) || ((defined DEBUG) && (DEBUG == 0))
@@ -138,9 +137,11 @@ int main(void)
   P_USB_CDC pCdc;
 #endif
   DEBUG_PIN_HIGH;
+  LED_init();
 
   /* Jump in application if condition is satisfied */
   check_start_application();
+  LED_off();
 
   /* We have determined we should stay in the monitor. */
   /* System initialization */
@@ -157,6 +158,7 @@ int main(void)
 #endif
 
   DEBUG_PIN_LOW;
+  LED_on();
 
   /* Wait for a complete enum on usb or a '#' char on serial line */
   while (1)
