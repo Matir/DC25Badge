@@ -1179,12 +1179,12 @@ Wire Wire Line
 Text Label 1050 2500 1    60   ~ 0
 BNEG
 $Comp
-L Jumper_NO_Small JP?
+L Jumper_NO_Small JP1
 U 1 1 594EF10E
 P 1250 2650
-F 0 "JP?" H 1250 2550 50  0000 C CNN
+F 0 "JP1" H 1250 2550 50  0000 C CNN
 F 1 "Jumper_NO_Small" H 1260 2590 50  0001 C CNN
-F 2 "" H 1250 2650 50  0000 C CNN
+F 2 "Badge_Parts:JP_SOLDER" H 1250 2650 50  0001 C CNN
 F 3 "" H 1250 2650 50  0000 C CNN
 	1    1250 2650
 	1    0    0    -1  
